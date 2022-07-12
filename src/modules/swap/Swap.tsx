@@ -1,7 +1,10 @@
+import { useWeb3React } from "@web3-react/core"
 import React, { useState } from "react"
 
-import { BUSD_ADDRESS } from "../../blockchain/publicInstance/busd"
-import { BUST_ADDRESS } from "../../blockchain/publicInstance/bust"
+import { BUSD_ADDRESS } from "../../blockchain/privateInstance/busd"
+import { BUST_ADDRESS } from "../../blockchain/privateInstance/bust"
+import { usePrivateInstances } from "../../blockchain/privateInstance/instances"
+import { ROUTER_ADDRESS } from "../../blockchain/publicInstance/router"
 import { Button } from "../../shared/button"
 import { isValid } from "../../shared/helpers/util"
 import { useSwap } from "../../shared/hooks/useSwap"
@@ -23,8 +26,9 @@ const Swap: React.FC = () => {
   const [ticker2, setTicker2] = useState(tokens[4].name)
   const [token0, setToken0] = useState("")
   const [token1, setToken1] = useState("")
-  const { getBUST } = useSwap()
-
+  const { getOtherTokenPrice, swap } = useSwap()
+  const { BUSD } = usePrivateInstances()
+  const { account } = useWeb3React()
 
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
     var t = e.target.value;
@@ -32,7 +36,7 @@ const Swap: React.FC = () => {
       e.target.value = t.indexOf(".") >= 0 ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 19) : t;
       let value: string = e.target.value;
       setToken0(value)
-      const res = await getBUST(value, BUSD_ADDRESS, BUST_ADDRESS)
+      const res = await getOtherTokenPrice(value, BUSD_ADDRESS, BUST_ADDRESS)
       if (res) setToken1(res)
       else setToken1("")
     }
@@ -45,12 +49,15 @@ const Swap: React.FC = () => {
       e.target.value = t.indexOf(".") >= 0 ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 19) : t;
       let value: string = e.target.value;
       setToken1(value)
-      const res = await getBUST(value, BUST_ADDRESS, BUSD_ADDRESS)
+      const res = await getOtherTokenPrice(value, BUST_ADDRESS, BUSD_ADDRESS)
       if (res) setToken0(res)
       else setToken0("")
     }
   }
 
+  const handleSwap = async () => {
+    swap(account, ROUTER_ADDRESS, token0)
+  }
 
   return (
     <PageContainer noPadding={true}>
@@ -71,7 +78,9 @@ const Swap: React.FC = () => {
             options={tokens.filter((val) => val.value !== ticker1)}
           />
         </InputWrapper>
-        <Button align="center" onClick={() => { }}>
+        <Button align="center" onClick={() => {
+          if (account) handleSwap()
+        }}>
           Swap
         </Button>
       </Card>
