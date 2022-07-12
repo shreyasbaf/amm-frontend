@@ -13,6 +13,10 @@ export enum AgentType {
     entity = 2,
 }
 
+export const isValid = (str: any) => {
+    return !/[~`!@#$%\^&*()+=\-\_\[\]\\';,/{}|\\":<>\A-Za-z\? ]/g.test(str);
+}
+
 export function roundFloat(value: number | undefined): number {
     return value ? parseFloat(value.toFixed(2)) : 0
 }
