@@ -92,6 +92,8 @@ interface ButtonWrapperProps {
   background?: string
   textColor?: string
   btnType?: buttonTypes
+  fullWidth?: boolean
+  width?: string
 }
 
 export const ButtonWrapper = styled.button<ButtonWrapperProps>`
@@ -101,6 +103,8 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   color: ${(props) => props.textColor || colors.white};
   cursor: pointer;
   padding: 0.8rem;
+  width: ${(props) =>
+    props.fullWidth ? "100%" : props.width ? props.width : "auto"};
   ${(props) =>
     (props.btnType == buttonTypes.error && error) ||
     (props.btnType == buttonTypes.success && success) ||

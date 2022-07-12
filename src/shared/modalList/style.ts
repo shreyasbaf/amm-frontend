@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { colors } from "../../styles/theme"
 
 interface TickerContainerProps {
   onChange?: React.MouseEventHandler<HTMLButtonElement> | undefined
@@ -30,4 +31,14 @@ export const ModalListWrapper = styled.div<ModalListWrapperProps>`
   left: ${(props) => props.left};
   right: ${(props) => props.right};
   bottom: ${(props) => props.bottom};
+`
+export const SelectorButton = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: ${colors.actionInfo};
+  height: 3.5rem;
+  width: 8rem;
+  padding: 0rem 1rem;
+  border-radius: 0px 0.3rem 0.3rem 0px;
 `

@@ -15,7 +15,7 @@ const Token = (props: TokenProps) => {
         src={require(`../../assets/tokens/${token?.toLowerCase()}.png`)}
         alt={token}
       />
-      {label ? <label>{label}</label> : null}
+      {label ? <span>{label}</span> : null}
     </TokenWrapper>
   )
 }

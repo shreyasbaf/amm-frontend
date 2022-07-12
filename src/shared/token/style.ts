@@ -13,7 +13,7 @@ export const TokenWrapper = styled.div<TokenWrapperProps>`
     max-width: 30px;
   }
 
-  label {
+  span {
     margin-left: 12px;
     font-size: 16px;
     font-weight: 700;

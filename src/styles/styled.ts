@@ -26,22 +26,6 @@ export const PageContainer = styled.div<any>`
   color: ${({ theme }) => theme.white};
 `
 
-export const Card = styled.div<any>`
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  width: 100%;
-  max-width: ${screenSizes.S}px;
-  margin: 0 auto;
-  min-height: auto;
-  padding: 2rem 3rem;
-  background: #151b24;
-  transition: all 300ms ease-in-out;
-  border-radius: 12px;
-  margin-top: 56px;
-  /* border: 1px solid red; */
-`
-
 export const whiteColor = css`
   color: ${({ theme }) => theme.white};
 `

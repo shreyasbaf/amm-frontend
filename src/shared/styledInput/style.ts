@@ -61,8 +61,9 @@ const inputStyles = css`
 export const InputWrapper = styled.input<propsInput>`
   width: ${(props) => (props.fullWidth ? "100%" : "16rem")};
   border-radius: 0.3rem;
-  height: 2.5rem;
-  font-size: 16px;
+  height: 3.5rem;
+  font-size: 18px;
+  font-weight: 900;
   outline: 0;
   border: 1px solid ${colors.lightGrey};
   padding: 0rem 1rem;
