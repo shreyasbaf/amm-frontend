@@ -1,7 +1,10 @@
+import { useWeb3React } from "@web3-react/core"
 import React, { useState } from "react"
 
-import { BUSD_ADDRESS } from "../../blockchain/publicInstance/busd"
-import { BUST_ADDRESS } from "../../blockchain/publicInstance/bust"
+import { BUSD_ADDRESS } from "../../blockchain/privateInstance/busd"
+import { BUST_ADDRESS } from "../../blockchain/privateInstance/bust"
+import { usePrivateInstances } from "../../blockchain/privateInstance/instances"
+import { ROUTER_ADDRESS } from "../../blockchain/publicInstance/router"
 import { Button } from "../../shared/button"
 import Card from "../../shared/card"
 import { isValid } from "../../shared/helpers/util"
@@ -26,6 +29,9 @@ const Swap: React.FC = () => {
   const [token0, setToken0] = useState("")
   const [token1, setToken1] = useState("")
   const { getBUST } = useSwap()
+  const { getOtherTokenPrice, swap } = useSwap()
+  const { BUSD } = usePrivateInstances()
+  const { account } = useWeb3React()
 
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
     var t = e.target.value
@@ -36,7 +42,7 @@ const Swap: React.FC = () => {
           : t
       let value: string = e.target.value
       setToken0(value)
-      const res = await getBUST(value, BUSD_ADDRESS, BUST_ADDRESS)
+      const res = await getOtherTokenPrice(value, BUSD_ADDRESS, BUST_ADDRESS)
       if (res) setToken1(res)
       else setToken1("")
     }
@@ -51,10 +57,14 @@ const Swap: React.FC = () => {
           : t
       let value: string = e.target.value
       setToken1(value)
-      const res = await getBUST(value, BUST_ADDRESS, BUSD_ADDRESS)
+      const res = await getOtherTokenPrice(value, BUST_ADDRESS, BUSD_ADDRESS)
       if (res) setToken0(res)
       else setToken0("")
     }
+  }
+
+  const handleSwap = async () => {
+    swap(account, ROUTER_ADDRESS, token0)
   }
 
   return (
@@ -86,7 +96,12 @@ const Swap: React.FC = () => {
           />
         </InputWrapper>
 
-        <Button align="center" width="12rem" onClick={() => {}}>
+        <Button
+          align="center"
+          width="12rem"
+          onClick={() => {
+            if (account) handleSwap()
+          }}>
           Swap
         </Button>
       </Card>
