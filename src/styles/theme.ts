@@ -117,6 +117,7 @@ export const colors: Colors = {
   errorRed: "#FF5656",
   lightGrey: "#D9D9D9",
   darkGrey: "#0D1117",
+  // darkGrey: "#fff",
   fadedGrey: rgba(191, 191, 191, 0.4),
 }
 

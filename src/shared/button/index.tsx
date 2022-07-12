@@ -1,8 +1,8 @@
-import { ButtonWrapper, ButtonAlignment } from "./style"
+import { ButtonWrapper, ButtonAlignment, buttonTypes } from "./style"
 
 interface ButtonProps {
   children?: React.ReactNode
-  btnType?: string
+  btnType?: buttonTypes
   align?: string
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined
 }

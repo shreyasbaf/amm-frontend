@@ -9,8 +9,8 @@ export const TokenWrapper = styled.div<TokenWrapperProps>`
   align-items: center;
 
   img {
-    height: 40px;
-    width: 40px;
+    max-height: 30px;
+    max-width: 30px;
   }
 
   label {

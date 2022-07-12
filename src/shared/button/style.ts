@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components"
+import { colors } from "../../styles/theme"
 
 const animateLoader = keyframes`
 from {transform : rotate(0deg)}
@@ -12,9 +13,8 @@ const svgCSS = css`
 `
 const buttonStyles = css`
   outline: none;
-  border-radius: 2px;
-  min-height: 50px;
-  min-width: 120px;
+  border-radius: 8px;
+
   color: rgb(0 0 0 / 90%);
   border: 1px solid rgb(0 0 0 / 90%);
   font-size: 1em;
@@ -64,18 +64,46 @@ const disabled = css`
   cursor: not-allowed;
 `
 
-export const ButtonWrapper = styled.button<any>`
+/* export const ButtonWrapper = styled.button<any>`
   ${buttonStyles}
   ${(props) =>
     (props.btnType == "error" && error) ||
     (props.btnType == "success" && success) ||
     (props.btnType == "warning" && warning) ||
     (props.btnType == "disabled" && disabled)}
-`
+` */
+
 export const ButtonAlignment = styled.div<any>`
   display: flex;
   justify-content: ${(props) =>
     (props.align == "center" && "center") ||
     (props.align == "start" && "flex-start") ||
     (props.align == "end" && "flex-end")};
+`
+
+export enum buttonTypes {
+  error,
+  success,
+  warning,
+  disabled,
+}
+
+interface ButtonWrapperProps {
+  background?: string
+  textColor?: string
+  btnType?: buttonTypes
+}
+
+export const ButtonWrapper = styled.button<ButtonWrapperProps>`
+  border-radius: 8px;
+  border: none;
+  background-color: ${(props) => props.background || colors.navy};
+  color: ${(props) => props.textColor || colors.white};
+  cursor: pointer;
+  padding: 0.8rem;
+  ${(props) =>
+    (props.btnType == buttonTypes.error && error) ||
+    (props.btnType == buttonTypes.success && success) ||
+    (props.btnType == buttonTypes.warning && warning) ||
+    (props.btnType == buttonTypes.disabled && disabled)}
 `

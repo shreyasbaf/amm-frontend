@@ -20,16 +20,26 @@ const Swap: React.FC = () => {
     <PageContainer noPadding={true}>
       <Card>
         <InputWrapper>
-          <StyledInput onChange={(e) => console.log(e.target.value)} />
+          <StyledInput
+            fullWidth
+            onChange={(e) => console.log(e.target.value)}
+          />
           <ModalList
+            position="absolute"
+            right={"0px"}
             value={ticker1}
             onChange={setTicker1}
             options={tokens.filter((val) => val.value !== ticker2)}
           />
         </InputWrapper>
         <InputWrapper>
-          <StyledInput onChange={(e) => console.log(e.target.value)} />
+          <StyledInput
+            fullWidth
+            onChange={(e) => console.log(e.target.value)}
+          />
           <ModalList
+            position="absolute"
+            right={"0px"}
             value={ticker2}
             onChange={setTicker2}
             options={tokens.filter((val) => val.value !== ticker1)}

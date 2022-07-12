@@ -3,7 +3,7 @@ import { colors } from "../../styles/theme"
 import { Button } from "../button"
 import CustomModal from "../modal/modal"
 import Token from "../token"
-import { TokenContainer } from "./style"
+import { ModalListWrapper, TokenContainer } from "./style"
 
 interface ModalListProps {
   options?: Array<{
@@ -12,14 +12,24 @@ interface ModalListProps {
   }>
   onChange?: any
   value?: string
+  position?: string
+  top?: string
+  left?: string
+  right?: string
+  bottom?: string
 }
 
 const ModalList = (props: ModalListProps) => {
-  const { options, onChange, value } = props
+  const { options, onChange, value, position, top, left, right, bottom } = props
   const [openModal, setOpenModal] = useState(false)
 
   return (
-    <div>
+    <ModalListWrapper
+      position={position}
+      top={top}
+      left={left}
+      right={right}
+      bottom={bottom}>
       {value ? (
         <Button onClick={() => setOpenModal(true)}>
           <Token token={value} label={value} labelColor={colors.black} />
@@ -45,7 +55,7 @@ const ModalList = (props: ModalListProps) => {
           </TokenContainer>
         ))}
       </CustomModal>
-    </div>
+    </ModalListWrapper>
   )
 }
 

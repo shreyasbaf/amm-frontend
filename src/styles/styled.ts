@@ -34,7 +34,7 @@ export const Card = styled.div<any>`
   max-width: ${screenSizes.S}px;
   margin: 0 auto;
   min-height: auto;
-  padding: ${(props) => (!props.noPadding ? `${gapSizes.XXL} 0 ` : "0")};
+  padding: 2rem 3rem;
   background: #151b24;
   transition: all 300ms ease-in-out;
   border-radius: 12px;
