@@ -41,8 +41,8 @@ export const useSwap = () => {
         try {
             
             ROUTER.methods.swapTokensForExactTokens(
-                token1Price_wei.toFixed(0),
                 token0Price_wei.toFixed(0),
+                token1Price_wei.toFixed(0),
                 [token0Address, token1Address],
                 admin,
                 deadLine).send({
