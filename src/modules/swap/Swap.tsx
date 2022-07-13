@@ -10,7 +10,7 @@ import { useSwap } from "../../shared/hooks/useSwap"
 import ModalList from "../../shared/modalList"
 import { StyledInput } from "../../shared/styledInput"
 import { PageContainer } from "../../styles/styled"
-import { ArrowContainer, InputWrapper } from "./style"
+import { ArrowContainer, InputWrapper, Position } from "./style"
 
 const tokens = [
   { name: "BNB", value: "BNB" },
@@ -23,7 +23,7 @@ const tokens = [
 const Swap: React.FC = () => {
   const [ticker1, setTicker1] = useState(tokens[1].name)
   const [ticker2, setTicker2] = useState(tokens[4].name)
-  const [rotate, setRotate] = useState<boolean>(false)
+  const [switchSwap, setSwitchSwap] = useState<boolean | undefined>()
   const [token0, setToken0] = useState("")
   const [token1, setToken1] = useState("")
   const [token0Address, setToken0Address] = useState(BUSD_ADDRESS)
@@ -89,7 +89,7 @@ const Swap: React.FC = () => {
   return (
     <PageContainer noPadding={true}>
       <Card title="Swap">
-        <InputWrapper>
+        <InputWrapper position={Position.top} switchSwap={switchSwap}>
           <StyledInput fullWidth value={token0} onChange={onChangeToken0} />
           <ModalList
             position="absolute"
@@ -102,12 +102,16 @@ const Swap: React.FC = () => {
         <ArrowContainer
           rotate={rotate}
           onClick={() => {
-            setRotate(!rotate)
+            setSwitchSwap(!switchSwap)
             onSwapTokensPlaces()
           }}
           src={require("../../assets/icons/arrow-down-icon.svg")}
         />
-        <InputWrapper margin="0px 0px 2rem 0px">
+
+        <InputWrapper
+          position={Position.bottom}
+          switchSwap={switchSwap}
+          margin="0px 0px 2rem 0px">
           <StyledInput fullWidth value={token1} onChange={onChangeToken1} />
           <ModalList
             position="absolute"
