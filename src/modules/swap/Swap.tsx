@@ -1,10 +1,8 @@
 import { useWeb3React } from "@web3-react/core"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { BUSD_ADDRESS } from "../../blockchain/privateInstance/busd"
 import { BUST_ADDRESS } from "../../blockchain/privateInstance/bust"
-import { usePrivateInstances } from "../../blockchain/privateInstance/instances"
-import { ROUTER_ADDRESS } from "../../blockchain/publicInstance/router"
 import { Button } from "../../shared/button"
 import Card from "../../shared/card"
 import { isValid } from "../../shared/helpers/util"
@@ -28,9 +26,9 @@ const Swap: React.FC = () => {
   const [switchSwap, setSwitchSwap] = useState<boolean | undefined>()
   const [token0, setToken0] = useState("")
   const [token1, setToken1] = useState("")
-  const { getBUST } = useSwap()
+  const [token0Address, setToken0Address] = useState(BUSD_ADDRESS)
+  const [token1Address, setToken1Address] = useState(BUST_ADDRESS)
   const { getOtherTokenPrice, swap } = useSwap()
-  const { BUSD } = usePrivateInstances()
   const { account } = useWeb3React()
 
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,14 +40,14 @@ const Swap: React.FC = () => {
           : t
       let value: string = e.target.value
       setToken0(value)
-      const res = await getOtherTokenPrice(value, BUSD_ADDRESS, BUST_ADDRESS)
+      const res = await getOtherTokenPrice(value, token0Address, token1Address)
       if (res) setToken1(res)
       else setToken1("")
     }
   }
 
   const onChangeToken1 = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    var t = e.target.value
+    let t = e.target.value
     if (isValid(t)) {
       e.target.value =
         t.indexOf(".") >= 0
@@ -57,14 +55,35 @@ const Swap: React.FC = () => {
           : t
       let value: string = e.target.value
       setToken1(value)
-      const res = await getOtherTokenPrice(value, BUST_ADDRESS, BUSD_ADDRESS)
+      const res = await getOtherTokenPrice(value, token1Address, token0Address)
       if (res) setToken0(res)
       else setToken0("")
     }
   }
 
+  useEffect(() => {
+    (async () => {
+      const res = await getOtherTokenPrice(token0, token0Address, token1Address)
+      if (res) setToken1(res)
+      else setToken1("")
+    })()
+  }, [token0Address, token1Address])
+
+  const onSwapTokensPlaces = async () => {
+    const tempToken1Address = token1Address
+    const temp0 = ticker1
+    setTicker1(ticker2)
+    setTicker2(temp0)
+    const tempToken1Price = token1
+    setToken0(tempToken1Price)
+    setToken1Address(token0Address)
+    setToken0Address(tempToken1Address)
+  }
+
   const handleSwap = async () => {
-    swap(account, ROUTER_ADDRESS, token0)
+    if (Number(token0) && Number(token1)) {
+      swap(account, token0, token1, token0Address, token1Address, token0Address == ticker1 ? "BUSD" : "BUST")
+    }
   }
 
   return (
@@ -81,8 +100,11 @@ const Swap: React.FC = () => {
           />
         </InputWrapper>
         <ArrowContainer
-          switchSwap={switchSwap}
-          onClick={() => setSwitchSwap(!switchSwap)}
+          rotate={rotate}
+          onClick={() => {
+            setSwitchSwap(!switchSwap)
+            onSwapTokensPlaces()
+          }}
           src={require("../../assets/icons/arrow-down-icon.svg")}
         />
 
