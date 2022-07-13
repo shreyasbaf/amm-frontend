@@ -39,8 +39,8 @@ const Swap: React.FC = () => {
           ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 19)
           : t
       let value: string = e.target.value
-      setToken0(value)
-      const res = await getOtherTokenPrice(value, token0Address, token1Address)
+      setToken0(value)      
+      const res = await getOtherTokenPrice(value, token0Address, token1Address)      
       if (res) setToken1(res)
       else setToken1("")
     }
@@ -54,28 +54,24 @@ const Swap: React.FC = () => {
           ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 19)
           : t
       let value: string = e.target.value
-      setToken1(value)
-      const res = await getOtherTokenPrice(value, token1Address, token0Address)
+      setToken1(value)  
+      const res = await getOtherTokenPrice(value, token0Address, token1Address)
       if (res) setToken0(res)
       else setToken0("")
     }
   }
 
   useEffect(() => {
-    (async () => {
-      const res = await getOtherTokenPrice(token0, token0Address, token1Address)
-      if (res) setToken1(res)
-      else setToken1("")
-    })()
+    const swapValues = async () => {
+      const res = await getOtherTokenPrice(token1, token0Address, token1Address)      
+      if (res) setToken0(res)
+      else setToken0("")
+    }
+    if(token0) swapValues()
   }, [token0Address, token1Address])
 
   const onSwapTokensPlaces = async () => {
     const tempToken1Address = token1Address
-    const temp0 = ticker1
-    setTicker1(ticker2)
-    setTicker2(temp0)
-    const tempToken1Price = token1
-    setToken0(tempToken1Price)
     setToken1Address(token0Address)
     setToken0Address(tempToken1Address)
   }
@@ -100,7 +96,7 @@ const Swap: React.FC = () => {
           />
         </InputWrapper>
         <ArrowContainer
-          rotate={rotate}
+          switchSwap={switchSwap}
           onClick={() => {
             setSwitchSwap(!switchSwap)
             onSwapTokensPlaces()
