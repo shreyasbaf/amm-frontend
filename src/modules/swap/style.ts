@@ -75,3 +75,31 @@ export const ArrowContainer = styled.img<ArrowContainerProps>`
   animation: ${(props) => RotateAnimation(props.switchSwap)} 0.5s;
   animation-fill-mode: forwards;
 `
+
+interface BalanceWrapperProps {
+  walletConnected?: boolean
+  account: boolean
+}
+
+const MoveUpAnimation = ({
+  account,
+  walletConnected,
+}: BalanceWrapperProps) => keyframes`
+  0%{
+    transform: ${account ? "translateY(0px)" : "translateY(-40px)"} ;
+    opacity: ${walletConnected ? (account ? 0 : 1) : 0};    
+  };
+  
+  100%{
+    transform: ${account ? `translateY(-40px)` : `translateY(0px)`};
+    opacity: ${account ? 1 : 0};
+  };
+`
+
+export const BalanceWrapper = styled.div<BalanceWrapperProps>`
+  position: absolute;
+  right: 0px;
+  width: 10rem;
+  animation: ${(props) => MoveUpAnimation(props)} 0.5s ease-out;
+  animation-fill-mode: forwards;
+`

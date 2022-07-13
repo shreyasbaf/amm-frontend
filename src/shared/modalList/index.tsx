@@ -51,7 +51,11 @@ const ModalList = (props: ModalListProps) => {
               onChange(val.name)
               setOpenModal(false)
             }}>
-            <Token token={val.name} label={val.value} />
+            <Token
+              token={val.name}
+              label={val.value}
+              labelColor={colors.lightGrey}
+            />
           </TokenContainer>
         ))}
       </CustomModal>
