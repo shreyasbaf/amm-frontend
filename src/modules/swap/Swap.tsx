@@ -82,7 +82,7 @@ const Swap: React.FC = () => {
 
   const handleSwap = async () => {
     if (Number(token0) && Number(token1)) {
-      swap(account, token0, token1, token0Address, token1Address, token0Address == ticker1 ? "BUSD" : "BUST")
+      swap(account, token0, token1, token0Address, token1Address, token0Address == BUSD_ADDRESS ? "BUSD" : "BUST")
     }
   }
 
