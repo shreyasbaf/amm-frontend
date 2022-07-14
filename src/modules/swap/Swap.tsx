@@ -6,6 +6,7 @@ import { BUST_ADDRESS } from "../../blockchain/privateInstance/bust"
 import { Button } from "../../shared/button"
 import Card from "../../shared/card"
 import { isValid } from "../../shared/helpers/util"
+import { useGetUserBalance } from "../../shared/hooks/useGetUserBalance"
 import { useSwap } from "../../shared/hooks/useSwap"
 import ModalList from "../../shared/modalList"
 import { StyledInput } from "../../shared/styledInput"
@@ -28,7 +29,11 @@ const Swap: React.FC = () => {
   const [token1, setToken1] = useState("")
   const [token0Address, setToken0Address] = useState(BUSD_ADDRESS)
   const [token1Address, setToken1Address] = useState(BUST_ADDRESS)
+  const [busdBalance, setBusdBalance] = useState('0')
+  const [bustBalance, setBustBalance] = useState('0')
+  const [swappingUI, setSwappingUI] = useState<boolean>(false)
   const { getOtherTokenPrice, swap } = useSwap()
+  const { getBusdBalance, getBustBalance } = useGetUserBalance()
   const { account } = useWeb3React()
 
   const [walletConnected, setWalletConnected] = useState(
@@ -37,6 +42,24 @@ const Swap: React.FC = () => {
 
   useEffect(() => {
     setWalletConnected(localStorage.getItem("walletConnected"))
+  }, [account])
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        if (account) {
+          const busd = await getBusdBalance(account)
+          const bust = await getBustBalance(account)
+          setBusdBalance(busd)
+          setBustBalance(bust)
+        }
+      } catch (err) {
+        console.error("fetchBalance", err)
+      }
+    }
+
+    if (account) fetchBalance()
+
   }, [account])
 
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,9 +94,15 @@ const Swap: React.FC = () => {
 
   useEffect(() => {
     const swapValues = async () => {
-      const res = await getOtherTokenPrice(token1, token0Address, token1Address)
-      if (res) setToken0(res)
-      else setToken0("")
+      if (swappingUI) {
+        const res = await getOtherTokenPrice(token1, token0Address, token1Address)
+        if (res) setToken0(res)
+        else setToken0("")
+      } else {
+        const res = await getOtherTokenPrice(token0, token0Address, token1Address)
+        if (res) setToken1(res)
+        else setToken1("")
+      }
     }
     if (token0) swapValues()
   }, [token0Address, token1Address])
@@ -82,6 +111,7 @@ const Swap: React.FC = () => {
     const tempToken1Address = token1Address
     setToken1Address(token0Address)
     setToken0Address(tempToken1Address)
+    setSwappingUI((prev) => !prev)
   }
 
   const handleSwap = async () => {
@@ -105,7 +135,7 @@ const Swap: React.FC = () => {
           <BalanceWrapper
             walletConnected={walletConnected === "true" ? true : false}
             account={account ? true : false}>
-            Balance: 0.001 {ticker1}
+            Balance:{busdBalance} {ticker1}
           </BalanceWrapper>
           <ModalList
             position="absolute"
@@ -132,7 +162,7 @@ const Swap: React.FC = () => {
           <BalanceWrapper
             walletConnected={walletConnected === "true" ? true : false}
             account={account ? true : false}>
-            Balance: 0.001 {ticker2}
+            Balance: {bustBalance} {ticker2}
           </BalanceWrapper>
           <ModalList
             position="absolute"

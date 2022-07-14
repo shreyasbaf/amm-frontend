@@ -102,4 +102,5 @@ export const BalanceWrapper = styled.div<BalanceWrapperProps>`
   width: 10rem;
   animation: ${(props) => MoveUpAnimation(props)} 0.5s ease-out;
   animation-fill-mode: forwards;
+  white-space: nowrap;
 `
