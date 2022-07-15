@@ -26,17 +26,12 @@ const Swap: React.FC = () => {
   const [token1, setToken1] = useState<string>("")
   const [token0Address, setToken0Address] = useState<string>(BUSD_ADDRESS)
   const [token1Address, setToken1Address] = useState<string>(BUST_ADDRESS)
-  const [busdBalance, setBusdBalance] = useState<string>('0')
-  const [bustBalance, setBustBalance] = useState<string>('0')
+  const [busdBalance, setBusdBalance] = useState<string>("0")
+  const [bustBalance, setBustBalance] = useState<string>("0")
   const [swappingUI, setSwappingUI] = useState<boolean>(false)
-  const [walletConnected, setWalletConnected] = useState(localStorage.getItem("walletConnected"))
   const { getOtherTokenPrice, swap } = useSwap()
   const { getBusdBalance, getBustBalance } = useGetUserBalance()
   const { account } = useWeb3React()
-  
-  useEffect(() => {
-    setWalletConnected(localStorage.getItem("walletConnected"))
-  }, [account])
 
   useEffect(() => {
     const fetchBalance = async () => {
