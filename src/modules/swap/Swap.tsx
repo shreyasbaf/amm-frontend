@@ -22,24 +22,21 @@ const tokens = [
 ]
 
 const Swap: React.FC = () => {
-  const [ticker1, setTicker1] = useState(tokens[1].name)
-  const [ticker2, setTicker2] = useState(tokens[4].name)
+  const [ticker1, setTicker1] = useState<string>(tokens[1].name)
+  const [ticker2, setTicker2] = useState<string>(tokens[4].name)
   const [switchSwap, setSwitchSwap] = useState<boolean | undefined>()
-  const [token0, setToken0] = useState("")
-  const [token1, setToken1] = useState("")
-  const [token0Address, setToken0Address] = useState(BUSD_ADDRESS)
-  const [token1Address, setToken1Address] = useState(BUST_ADDRESS)
-  const [busdBalance, setBusdBalance] = useState('0')
-  const [bustBalance, setBustBalance] = useState('0')
+  const [token0, setToken0] = useState<string>("")
+  const [token1, setToken1] = useState<string>("")
+  const [token0Address, setToken0Address] = useState<string>(BUSD_ADDRESS)
+  const [token1Address, setToken1Address] = useState<string>(BUST_ADDRESS)
+  const [busdBalance, setBusdBalance] = useState<string>('0')
+  const [bustBalance, setBustBalance] = useState<string>('0')
   const [swappingUI, setSwappingUI] = useState<boolean>(false)
+  const [walletConnected, setWalletConnected] = useState(localStorage.getItem("walletConnected"))
   const { getOtherTokenPrice, swap } = useSwap()
   const { getBusdBalance, getBustBalance } = useGetUserBalance()
   const { account } = useWeb3React()
-
-  const [walletConnected, setWalletConnected] = useState(
-    localStorage.getItem("walletConnected")
-  )
-
+  
   useEffect(() => {
     setWalletConnected(localStorage.getItem("walletConnected"))
   }, [account])
