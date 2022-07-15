@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+
 import { usePrivateInstances } from "../../blockchain/privateInstance/instances";
 import { ROUTER } from "../../blockchain/publicInstance/instance";
 import { ROUTER_ADDRESS } from "../../blockchain/publicInstance/router";
@@ -6,7 +7,7 @@ import { ROUTER_ADDRESS } from "../../blockchain/publicInstance/router";
 export const useSwap = () => {
     const { BUSD, BUST} = usePrivateInstances()
 
-    const checkAllowance = async (admin: any, swapType: string) => {
+    const checkAllowance = async (admin: string, swapType: string) => {
         try {
             const allowanceValue = await (swapType == "BUSD" ? BUSD : BUST).methods.allowance(admin, ROUTER_ADDRESS).call()
             return allowanceValue
@@ -15,7 +16,7 @@ export const useSwap = () => {
         }
     }
 
-    const swapExactTokensForTokens = async (token0Price_wei: any, token1Price_wei: any, [token0Address, token1Address]: any, admin: any, deadLine: any) => {
+    const swapExactTokensForTokens = async (token0Price_wei: BigNumber, token1Price_wei: BigNumber, [token0Address, token1Address]: [string, string], admin: string, deadLine: string) => {
         try {
             ROUTER.methods.swapExactTokensForTokens(
                 token0Price_wei.toFixed(0),
@@ -37,7 +38,7 @@ export const useSwap = () => {
         }
     }
 
-    const swapTokensForExactTokens = async (token0Price_wei: any, token1Price_wei: any, [token0Address, token1Address]: any, admin: any, deadLine: any) => {
+    const swapTokensForExactTokens = async (token0Price_wei: BigNumber, token1Price_wei: BigNumber, [token0Address, token1Address]: [String, string], admin: string, deadLine: string) => {
         try {
             
             ROUTER.methods.swapTokensForExactTokens(
@@ -60,12 +61,12 @@ export const useSwap = () => {
         }
     }
 
-    const swap = async (admin: any, token0Price: any, token1Price: any, token0Address: any, token1Address: any, swapType: string) => {
+    const swap = async (admin: string | any, token0Price: string, token1Price: string, token0Address: string, token1Address: string, swapType: string) => {
         try {
-            let token0Price_wei = new BigNumber(token0Price).times(10 ** 18)
-            let token1Price_wei = new BigNumber(token1Price).times(10 ** 18)
-            let maxAllowance = new BigNumber(2).pow(256).minus(1)
-            let deadLine = (Math.round(new Date().getTime() / 1000) + 900).toString()
+            const token0Price_wei = new BigNumber(token0Price).times(10 ** 18)
+            const token1Price_wei = new BigNumber(token1Price).times(10 ** 18)
+            const maxAllowance = new BigNumber(2).pow(256).minus(1)
+            const deadLine = (Math.round(new Date().getTime() / 1000) + 900).toString()
             let allowance = await checkAllowance(admin, swapType)
             allowance = new BigNumber(allowance).dividedBy(10 ** 18)
             if (Number(allowance) < Number(token0Price)) {
@@ -88,11 +89,11 @@ export const useSwap = () => {
         }
     }
 
-    const getOtherTokenPrice = async (busdPrice: any, busdAddress: any, bustAddress: any) => {
+    const getOtherTokenPrice = async (tokenPrice: any, token0Address: any, token1Address: any) => {
         try {
-            if (Number(busdPrice)) {
-                const busdPrice_wei = new BigNumber(busdPrice).times(10 ** 18)
-                const BUST_Amount = await ROUTER.methods.getAmountsOut(busdPrice_wei.toFixed(0), [busdAddress, bustAddress]).call();
+            if (Number(tokenPrice)) {
+                const tokenPrice_wei = new BigNumber(tokenPrice).times(10 ** 18)
+                const BUST_Amount = await ROUTER.methods.getAmountsOut(tokenPrice_wei.toFixed(0), [token0Address, token1Address]).call();
                 let res = BUST_Amount[1]
                 res = new BigNumber(res).dividedBy(10 ** 18)
                 return res.toFixed(18)
