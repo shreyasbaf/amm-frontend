@@ -1,14 +1,9 @@
 import styled, { keyframes } from "styled-components"
 
-export enum Position {
-  top,
-  bottom,
-}
-
 interface InputWrapperProps {
   margin?: string
   switchSwap?: boolean | undefined
-  position: Position
+  position?: "top" | "bottom"
 }
 
 const MoveTopAnimation = (switchSwap: boolean | undefined) => keyframes`
@@ -47,47 +42,21 @@ export const InputWrapper = styled.div<InputWrapperProps>`
   margin: ${(props) => props.margin};
   animation: ${(props) =>
       props.switchSwap !== undefined &&
-      (props.position === Position.top
+      (props.position === "top"
         ? MoveTopAnimation(props.switchSwap)
         : MoveBottomAnimation(props.switchSwap))}
     0.5s;
   animation-fill-mode: forwards;
 `
 
-interface ArrowContainerProps {
-  switchSwap?: boolean
-}
-
-const RotateAnimation = (switchSwap: boolean | undefined) => keyframes`
-  0%{
-    transform: ${switchSwap === false && `rotate(180deg)`} ;    
-  }
-
-  100%{
-    transform: ${switchSwap && `rotate(180deg)`} ;    
-  }
-`
-
-export const ArrowContainer = styled.img<ArrowContainerProps>`
-  height: 3rem;
-  margin: 1rem 0rem;
-  cursor: pointer;
-  animation: ${(props) => RotateAnimation(props.switchSwap)} 0.5s;
-  animation-fill-mode: forwards;
-`
-
 interface BalanceWrapperProps {
-  walletConnected?: boolean
-  account: boolean
+  account?: boolean
 }
 
-const MoveUpAnimation = ({
-  account,
-  walletConnected,
-}: BalanceWrapperProps) => keyframes`
+const MoveUpAnimation = ({ account }: BalanceWrapperProps) => keyframes`
   0%{
     transform: ${account ? "translateY(0px)" : "translateY(-40px)"} ;
-    opacity: ${walletConnected ? (account ? 0 : 1) : 0};    
+    opacity: ${account ? 0 : 1};    
   };
   
   100%{
@@ -100,7 +69,7 @@ export const BalanceWrapper = styled.div<BalanceWrapperProps>`
   position: absolute;
   right: 0px;
   width: 10rem;
+  white-space: nowrap;
   animation: ${(props) => MoveUpAnimation(props)} 0.5s ease-out;
   animation-fill-mode: forwards;
-  white-space: nowrap;
 `

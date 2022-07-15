@@ -13,7 +13,6 @@ export const CardWrapper = styled.div`
   background: #151b24;
   transition: all 300ms ease-in-out;
   border-radius: 12px;
-  margin-top: 56px;
 
   label {
     font-size: 32px;

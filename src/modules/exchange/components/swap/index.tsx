@@ -1,17 +1,14 @@
 import { useWeb3React } from "@web3-react/core"
 import React, { useEffect, useState } from "react"
-
-import { BUSD_ADDRESS } from "../../blockchain/privateInstance/busd"
-import { BUST_ADDRESS } from "../../blockchain/privateInstance/bust"
-import { Button } from "../../shared/button"
-import Card from "../../shared/card"
-import { isValid } from "../../shared/helpers/util"
-import { useGetUserBalance } from "../../shared/hooks/useGetUserBalance"
-import { useSwap } from "../../shared/hooks/useSwap"
-import ModalList from "../../shared/modalList"
-import { StyledInput } from "../../shared/styledInput"
-import { PageContainer } from "../../styles/styled"
-import { ArrowContainer, BalanceWrapper, InputWrapper, Position } from "./style"
+import { BUSD_ADDRESS } from "../../../../blockchain/privateInstance/busd"
+import { BUST_ADDRESS } from "../../../../blockchain/privateInstance/bust"
+import { Button } from "../../../../shared/button"
+import Card from "../../../../shared/card"
+import { isValid } from "../../../../shared/helpers/util"
+import { useGetUserBalance } from "../../../../shared/hooks/useGetUserBalance"
+import { useSwap } from "../../../../shared/hooks/useSwap"
+import { IconButton, Spacer } from "../../../../shared/shared"
+import SwapInput from "../swapInput"
 
 const tokens = [
   { name: "BNB", value: "BNB" },
@@ -56,7 +53,6 @@ const Swap: React.FC = () => {
     }
 
     if (account) fetchBalance()
-
   }, [account])
 
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +88,19 @@ const Swap: React.FC = () => {
   useEffect(() => {
     const swapValues = async () => {
       if (swappingUI) {
-        const res = await getOtherTokenPrice(token1, token0Address, token1Address)
+        const res = await getOtherTokenPrice(
+          token1,
+          token0Address,
+          token1Address
+        )
         if (res) setToken0(res)
         else setToken0("")
       } else {
-        const res = await getOtherTokenPrice(token0, token0Address, token1Address)
+        const res = await getOtherTokenPrice(
+          token0,
+          token0Address,
+          token1Address
+        )
         if (res) setToken1(res)
         else setToken1("")
       }
@@ -125,61 +129,52 @@ const Swap: React.FC = () => {
   }
 
   return (
-    <PageContainer noPadding={true}>
-      <Card title="Swap">
-        <InputWrapper position={Position.top} switchSwap={switchSwap}>
-          <StyledInput fullWidth value={token0} onChange={onChangeToken0} />
-          <BalanceWrapper
-            walletConnected={walletConnected === "true" ? true : false}
-            account={account ? true : false}>
-            Balance:{busdBalance} {ticker1}
-          </BalanceWrapper>
-          <ModalList
-            position="absolute"
-            right={"0px"}
-            value={ticker1}
-            onChange={setTicker1}
-            options={tokens.filter((val) => val.value !== ticker2)}
-          />
-        </InputWrapper>
-        <ArrowContainer
+    <Card title="Swap">
+      <SwapInput
+        position="top"
+        switchSwap={switchSwap}
+        ticker={ticker1}
+        tokenValue={token0}
+        onChangeInput={onChangeToken0}
+        setTicker={setTicker1}
+        balance={busdBalance}
+        swapTokenList={tokens.filter((val) => val.value !== ticker2)}
+      />
+
+      <Spacer marginTop="1rem" marginBottom="1rem">
+        <IconButton
           switchSwap={switchSwap}
           onClick={() => {
             setSwitchSwap(!switchSwap)
             onSwapTokensPlaces()
           }}
-          src={require("../../assets/icons/arrow-down-icon.svg")}
+          src={require("../../../../assets/icons/arrow-down-icon.svg")}
         />
+      </Spacer>
 
-        <InputWrapper
-          position={Position.bottom}
-          switchSwap={switchSwap}
-          margin="0px 0px 2rem 0px">
-          <StyledInput fullWidth value={token1} onChange={onChangeToken1} />
-          <BalanceWrapper
-            walletConnected={walletConnected === "true" ? true : false}
-            account={account ? true : false}>
-            Balance: {bustBalance} {ticker2}
-          </BalanceWrapper>
-          <ModalList
-            position="absolute"
-            right={"0px"}
-            value={ticker2}
-            onChange={setTicker2}
-            options={tokens.filter((val) => val.value !== ticker1)}
-          />
-        </InputWrapper>
+      <SwapInput
+        position="bottom"
+        switchSwap={switchSwap}
+        ticker={ticker2}
+        tokenValue={token1}
+        onChangeInput={onChangeToken1}
+        setTicker={setTicker2}
+        balance={bustBalance}
+        swapTokenList={tokens.filter((val) => val.value !== ticker1)}
+      />
 
-        <Button
-          align="center"
-          width="12rem"
-          onClick={() => {
-            if (account) handleSwap()
-          }}>
-          Swap
-        </Button>
-      </Card>
-    </PageContainer>
+      <Spacer marginTop="2rem" />
+
+      <Button
+        disabled={Number(token0) && Number(token1) ? false : true}
+        fullWidth
+        align="center"
+        onClick={() => {
+          if (account) handleSwap()
+        }}>
+        Swap
+      </Button>
+    </Card>
   )
 }
 
