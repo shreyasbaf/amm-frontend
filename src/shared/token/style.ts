@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 interface TokenWrapperProps {
   labelColor?: string
+  size?: string
 }
 
 export const TokenWrapper = styled.div<TokenWrapperProps>`
@@ -9,8 +10,8 @@ export const TokenWrapper = styled.div<TokenWrapperProps>`
   align-items: center;
 
   img {
-    max-height: 30px;
-    max-width: 30px;
+    height: ${(props) => props.size || `50px`};
+    width: ${(props) => props.size || `50px`};
   }
 
   span {

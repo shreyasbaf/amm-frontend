@@ -1,6 +1,9 @@
 import React, { useState } from "react"
+import Collapse from "../../shared/collapse"
 import { Spacer } from "../../shared/shared"
+import TokenPair from "../../shared/tokenPair"
 import Liquidity from "./components/liquidity"
+import RemoveLiquidity from "./components/removeLiquidity"
 import Swap from "./components/swap"
 import { TabButton, TabWrapper } from "./components/tab/style"
 

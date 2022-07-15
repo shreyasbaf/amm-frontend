@@ -13,8 +13,22 @@ interface ButtonProps {
 export const Button = (props: ButtonProps) => {
   const { children, btnType, align, onClick, fullWidth, width, disabled } =
     props
-  return (
-    <ButtonAlignment align={align}>
+
+  if (align) {
+    return (
+      <ButtonAlignment align={align}>
+        <ButtonWrapper
+          disabled={disabled}
+          btnType={btnType}
+          fullWidth={fullWidth}
+          width={width}
+          onClick={onClick}>
+          {children}
+        </ButtonWrapper>
+      </ButtonAlignment>
+    )
+  } else {
+    return (
       <ButtonWrapper
         disabled={disabled}
         btnType={btnType}
@@ -23,6 +37,6 @@ export const Button = (props: ButtonProps) => {
         onClick={onClick}>
         {children}
       </ButtonWrapper>
-    </ButtonAlignment>
-  )
+    )
+  }
 }

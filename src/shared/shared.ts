@@ -154,3 +154,27 @@ export const IconButton = styled.img<IconButtonProps>`
   animation: ${(props) => RotateAnimation(props.switchSwap)} 0.5s;
   animation-fill-mode: forwards;
 `
+
+export const StyledSlider = styled.input.attrs({ type: "range" })`
+  width: 100%;
+  height: 0.2rem;
+  border-radius: 3rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background: ${colors.lightGrey};
+  cursor: pointer;
+
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: ${colors.lightNavy};
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+
+    :hover {
+      transform: scale(1.2);
+      transition: all 0.2s ease-in-out;
+    }
+  }
+`
