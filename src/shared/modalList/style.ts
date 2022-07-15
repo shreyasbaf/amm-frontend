@@ -41,4 +41,5 @@ export const SelectorButton = styled.div`
   width: 8rem;
   padding: 0rem 1rem;
   border-radius: 0px 0.3rem 0.3rem 0px;
+  white-space: nowrap;
 `

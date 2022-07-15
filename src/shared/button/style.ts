@@ -62,6 +62,7 @@ const warning = css`
 const disabled = css`
   pointer-events: none;
   cursor: not-allowed;
+  background-color: ${colors.darkGrey};
 `
 
 /* export const ButtonWrapper = styled.button<any>`
@@ -73,7 +74,11 @@ const disabled = css`
     (props.btnType == "disabled" && disabled)}
 ` */
 
-export const ButtonAlignment = styled.div<any>`
+interface ButtonAlignmentProps {
+  align?: "center" | "start" | "end"
+}
+
+export const ButtonAlignment = styled.div<ButtonAlignmentProps>`
   display: flex;
   justify-content: ${(props) =>
     (props.align == "center" && "center") ||
@@ -105,9 +110,14 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   padding: 0.8rem;
   width: ${(props) =>
     props.fullWidth ? "100%" : props.width ? props.width : "auto"};
+
+  :active {
+    transform: scale(0.98);
+  }
+
   ${(props) =>
     (props.btnType == buttonTypes.error && error) ||
     (props.btnType == buttonTypes.success && success) ||
     (props.btnType == buttonTypes.warning && warning) ||
-    (props.btnType == buttonTypes.disabled && disabled)}
+    (props.disabled && disabled)}
 `

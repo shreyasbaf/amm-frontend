@@ -1,11 +1,36 @@
 import styled from "styled-components"
+import { screenSizes } from "../../../styles/theme"
 
-export const HeaderContainer = styled.header`
+export const HeaderContainer = styled.div`
   padding: 0.5rem 30px;
   position: sticky;
   top: 0;
   backdrop-filter: blur(8px);
   background: rgb(22, 27, 34);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 12px;
+
+  @media (max-width: ${screenSizes.M}px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    @media (max-width: ${screenSizes.M}px) {
+      justify-content: end;
+    }
+  }
+
+  div:last-child {
+    display: flex;
+    justify-content: end;
+    @media (max-width: ${screenSizes.M}px) {
+      justify-content: space-between;
+      grid-column: span 2;
+    }
+  }
 `
 export const LogoContainer = styled.div`
   width: 150px;

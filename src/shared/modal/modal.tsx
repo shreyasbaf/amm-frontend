@@ -1,13 +1,23 @@
+import React from "react"
 import { createPortal } from "react-dom"
-import { ModalBody, ModalContent, ModelHead, Close } from "./style"
+import { ModalBody, ModalContent, Close, ModalHead } from "./style"
 
-const CustomModal = (props: any) => {
-  const { show, toggleModal, borderRadius, close, heading, styles, headIcon } =
-    props
-  // console.log(
-  //   "🚀 ~ file: CustomModal.tsx ~ line 14 ~ CustomModal ~ headIcon",
-  //   headIcon
-  // );
+/* 
+  This modal component is attached directly to the <body> element of the html file, 
+  this behavior is only triggered when modal is opened.
+*/
+
+interface CustomModalProps {
+  show?: boolean
+  toggleModal?: any
+  borderRadius?: string
+  heading?: string
+  styles?: React.CSSProperties | undefined
+  children?: React.ReactNode
+}
+
+const CustomModal = (props: CustomModalProps) => {
+  const { show, toggleModal, borderRadius, heading, styles, children } = props
 
   const handleClickOutside = (e: any) => {
     if (e.target === e.currentTarget) {
@@ -15,44 +25,21 @@ const CustomModal = (props: any) => {
     }
   }
 
-  /* return (
-    <ModalBody
-      id="modal-local"
-      show={show}
-      onMouseDown={handleClickOutside}
-      style={{ ...styles }}>
-      <ModalContent borderRadius={borderRadius}>
-        <ModelHead>
-          <h2>{heading}</h2>
-          <Close
-            onClick={() => toggleModal(!show)}
-            src={require("../../assets/icons/close-icon.svg")}
-          />
-        </ModelHead>
-        {props.children}
-      </ModalContent>
-    </ModalBody>
-  ) */
-
   if (show) {
     return createPortal(
-      <ModalBody
-        id="modal-local"
-        show={show}
-        onMouseDown={handleClickOutside}
-        style={{ ...styles }}>
+      <ModalBody show={show} onMouseDown={handleClickOutside} style={styles}>
         <ModalContent borderRadius={borderRadius}>
-          <ModelHead>
+          <ModalHead>
             <h2>{heading}</h2>
             <Close
               onClick={() => toggleModal(!show)}
               src={require("../../assets/icons/close-icon.svg")}
             />
-          </ModelHead>
-          {props.children}
+          </ModalHead>
+          {children}
         </ModalContent>
       </ModalBody>,
-      document.getElementById("modal-global") || <></>
+      document.body
     )
   } else {
     return <></>

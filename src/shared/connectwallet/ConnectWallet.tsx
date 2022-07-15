@@ -22,6 +22,7 @@ import {
   SharedButton,
   SharedDetailBlock,
   SharedForum,
+  Spacer,
 } from "../../shared/shared"
 
 import { WalletTypes } from "../..//blockchain/wallethelper/Constants"
@@ -120,17 +121,13 @@ const ConnectWallet = (props: any) => {
               </AddressInfo>
             </AddressInfoWrap>
           ) : (
-            <ConnectLink
+            <Button
               onClick={() => {
                 setWalletOptions(true)
                 props.showLogout(true)
               }}>
-              {/* <img
-                src={require("../../assets/icons/connect-icon.svg").default}
-                alt=""
-              /> */}
               Connect
-            </ConnectLink>
+            </Button>
           )
         ) : null}
 
@@ -143,24 +140,23 @@ const ConnectWallet = (props: any) => {
           heading="Connect to a Wallet"
           // headIcon={require("../../assets/icons/money.svg").default}
         >
-          <div style={{ marginTop: "25px" }}>
-            <WalletOption onClick={() => connect(WalletTypes.metamask)}>
-              <p>Metamask</p>
-
-              {/* <img
+          <Spacer marginTop="25px" />
+          <Button fullWidth onClick={() => connect(WalletTypes.metamask)}>
+            <Spacer margin="1rem">Metamask</Spacer>
+            {/* <img
                 src={require("../../assets/image/metamask.svg").default}
                 alt=""
               /> */}
-            </WalletOption>
-            <WalletOption onClick={() => connect(WalletTypes.walletConnect)}>
-              <p>TrustWallet</p>
+          </Button>
+          <Spacer marginTop="1rem" />
+          <Button fullWidth onClick={() => connect(WalletTypes.walletConnect)}>
+            <Spacer margin="1rem">TrustWallet</Spacer>
 
-              {/* <img
+            {/* <img
                 src={require("../../assets/icons/wallet-connect.svg").default}
                 alt=""
               /> */}
-            </WalletOption>
-          </div>
+          </Button>
         </CustomModal>
 
         {account && (
@@ -175,13 +171,14 @@ const ConnectWallet = (props: any) => {
             <WalletDetails>
               <p>{walletAddress}</p>
               <div style={{ textAlign: "center" }}>
-                <SharedButton
+                <Button
+                  align="center"
                   onClick={() => {
                     logout()
                     setDisconnectWallet(false)
                   }}>
                   Logout
-                </SharedButton>
+                </Button>
               </div>
             </WalletDetails>
           </CustomModal>

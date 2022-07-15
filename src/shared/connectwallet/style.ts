@@ -53,7 +53,7 @@ export const BnbInfo = styled.div<{ menu: any }>`
   font-size: 12px;
   line-height: 19px;
   font-family: SemiBold;
-
+  border-radius: 12px;
   border: 0.5px solid rgba(255, 255, 255, 0.2);
   padding: 12px 50px 33px 25px;
   height: 23px;
@@ -78,6 +78,7 @@ export const AddressInfo = styled.div`
   line-height: 19px;
   font-family: SemiBold;
   border: 0.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   padding: 12px 25px 33px 25px;
   height: 25px;
   margin-left: -40px;

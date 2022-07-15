@@ -1,8 +1,8 @@
 import { Route, Routes, Navigate } from "react-router-dom"
 import { poolPath, rootPath } from "../../../logic/paths"
-import { withHeader } from "../../../shared/hocs/withHeader"
+import PageContainer from "../../../shared/pageContainer"
+import Exchange from "../../exchange"
 import Pool from "../../pool/Pool"
-import Swap from "../../swap/Swap"
 
 const notFoundRoute: RouteDefinition = {
   path: "*",
@@ -14,7 +14,7 @@ const notFoundRoute: RouteDefinition = {
 export const routes: RouteDefinition[] = [
   {
     path: rootPath,
-    element: Swap,
+    element: Exchange,
     protected: false,
     title: "Swap",
     pathType: 0,
@@ -27,9 +27,7 @@ export const routes: RouteDefinition[] = [
     title: "Pool",
     pathType: 0,
   },
-]
-  .map((r) => ({ ...r, element: withHeader(r.element) }))
-  .concat(notFoundRoute as any) // Ensure that notFound is the last route
+].concat(notFoundRoute as any) // Ensure that notFound is the last route
 
 export interface RouteDefinition {
   path: string
@@ -79,5 +77,9 @@ export const RoutesComponent: React.FC<Props & RoutesProps> = () => {
     return <Route key={i} path={route.path} {...render} />
   }
 
-  return <Routes>{routes.map(mapRoutes)}</Routes>
+  return (
+    <PageContainer>
+      <Routes>{routes.map(mapRoutes)}</Routes>
+    </PageContainer>
+  )
 }

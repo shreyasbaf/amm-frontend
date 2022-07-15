@@ -11,7 +11,6 @@ const Card = (props: CardProps) => {
   return (
     <CardWrapper>
       {title ? <label>{title}</label> : null}
-
       {children}
     </CardWrapper>
   )

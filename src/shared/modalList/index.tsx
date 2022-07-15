@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { colors } from "../../styles/theme"
-import { Button } from "../button"
 import CustomModal from "../modal/modal"
 import Token from "../token"
 import { ModalListWrapper, SelectorButton, TokenContainer } from "./style"
@@ -35,7 +34,9 @@ const ModalList = (props: ModalListProps) => {
           <Token token={value} label={value} labelColor={colors.black} />
         </SelectorButton>
       ) : (
-        <Button onClick={() => setOpenModal(true)}>Select a token</Button>
+        <SelectorButton onClick={() => setOpenModal(true)}>
+          Select a token
+        </SelectorButton>
       )}
 
       <CustomModal
