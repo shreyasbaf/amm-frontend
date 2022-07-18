@@ -5,10 +5,11 @@ import { CollapseHeader } from "./style"
 interface CollapseProps {
   header?: string | React.ReactNode | undefined
   children?: React.ReactNode
+  iconSrc?: string
 }
 
 const Collapse = (props: CollapseProps) => {
-  const { header, children } = props
+  const { header, children, iconSrc } = props
   const [showDescription, setShowDescription] = useState(false)
   return (
     <div>
@@ -18,7 +19,9 @@ const Collapse = (props: CollapseProps) => {
         ) : (
           header
         )}
-        <IconButton src={require("../../assets/icons/arrow-down-icon.svg")} />
+        <IconButton
+          src={iconSrc || require("../../assets/icons/arrow-down-icon.svg")}
+        />
       </CollapseHeader>
       {showDescription ? (
         <>

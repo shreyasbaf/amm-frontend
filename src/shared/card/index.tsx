@@ -4,12 +4,13 @@ import { CardWrapper } from "./style"
 interface CardProps {
   children?: React.ReactNode
   title?: string
+  cardMaxWidth?: number | string
 }
 
 const Card = (props: CardProps) => {
-  const { children, title } = props
+  const { children, title, cardMaxWidth } = props
   return (
-    <CardWrapper>
+    <CardWrapper cardMaxWidth={cardMaxWidth}>
       {title ? <label>{title}</label> : null}
       {children}
     </CardWrapper>

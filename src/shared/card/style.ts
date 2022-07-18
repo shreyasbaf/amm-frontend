@@ -1,12 +1,16 @@
 import styled from "styled-components"
 import { screenSizes } from "../../styles/theme"
 
-export const CardWrapper = styled.div`
+interface CardWrapperProps {
+  cardMaxWidth?: number | string
+}
+
+export const CardWrapper = styled.div<CardWrapperProps>`
   display: flex;
   flex-direction: column;
   align-self: center;
   width: 100%;
-  max-width: ${screenSizes.S}px;
+  max-width: ${(props) => props.cardMaxWidth || screenSizes.S}px;
   margin: 0 auto;
   min-height: auto;
   padding: 2rem 3rem;

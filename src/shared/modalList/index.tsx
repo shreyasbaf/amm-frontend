@@ -31,7 +31,12 @@ const ModalList = (props: ModalListProps) => {
       bottom={bottom}>
       {value ? (
         <SelectorButton onClick={() => setOpenModal(true)}>
-          <Token token={value} label={value} labelColor={colors.black} />
+          <Token
+            size="40px"
+            token={value}
+            label={value}
+            labelColor={colors.black}
+          />
         </SelectorButton>
       ) : (
         <SelectorButton onClick={() => setOpenModal(true)}>

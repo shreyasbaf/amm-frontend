@@ -134,6 +134,7 @@ const Swap: React.FC = () => {
         setTicker={setTicker1}
         balance={busdBalance}
         swapTokenList={tokens.filter((val) => val.value !== ticker2)}
+        showModalList
       />
 
       <Spacer marginTop="1rem" marginBottom="1rem">
@@ -156,6 +157,7 @@ const Swap: React.FC = () => {
         setTicker={setTicker2}
         balance={bustBalance}
         swapTokenList={tokens.filter((val) => val.value !== ticker1)}
+        showModalList
       />
 
       <Spacer marginTop="2rem" />

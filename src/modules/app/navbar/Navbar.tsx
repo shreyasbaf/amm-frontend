@@ -9,6 +9,8 @@ import { rapidInnovationLogoURL } from "../../../shared/utility"
 import { poolPath, rootPath } from "../../../logic/paths"
 import ConnectWallet from "../../../shared/connectwallet/ConnectWallet"
 import { useWeb3React } from "@web3-react/core"
+import { Button } from "../../../shared/button"
+import { Spacer } from "../../../shared/shared"
 
 export const Navbar = () => {
   const { account } = useWeb3React()
@@ -27,7 +29,9 @@ export const Navbar = () => {
         </Navigations>
       </div>
       <div>
-        <NetworkContainer>BSC - Testnet</NetworkContainer>
+        <Spacer marginRight="1rem">
+          <Button>BSC - Testnet</Button>
+        </Spacer>
         <ConnectWallet
           connectWallet={account ? true : false}
           walletAddress={account}

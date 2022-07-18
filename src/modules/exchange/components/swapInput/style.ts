@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components"
+import { colors } from "../../../../styles/theme"
 
 interface InputWrapperProps {
   margin?: string
@@ -68,8 +69,8 @@ const MoveUpAnimation = ({ account }: BalanceWrapperProps) => keyframes`
 export const BalanceWrapper = styled.div<BalanceWrapperProps>`
   position: absolute;
   right: 0px;
-  width: 10rem;
   white-space: nowrap;
+  color: ${colors.white};
   animation: ${(props) => MoveUpAnimation(props)} 0.5s ease-out;
   animation-fill-mode: forwards;
 `

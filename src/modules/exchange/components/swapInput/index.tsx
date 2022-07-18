@@ -1,5 +1,6 @@
 import { useWeb3React } from "@web3-react/core"
 import ModalList from "../../../../shared/modalList"
+import { SelectorButton } from "../../../../shared/modalList/style"
 import { StyledInput } from "../../../../shared/styledInput"
 import { BalanceWrapper, InputWrapper } from "./style"
 
@@ -15,6 +16,7 @@ interface SwapInputProps {
   }>
   setTicker?: any
   position?: "top" | "bottom"
+  showModalList?: boolean
 }
 
 const SwapInput = (props: SwapInputProps) => {
@@ -27,6 +29,7 @@ const SwapInput = (props: SwapInputProps) => {
     swapTokenList,
     setTicker,
     position,
+    showModalList,
   } = props
 
   const { account } = useWeb3React()
@@ -39,14 +42,17 @@ const SwapInput = (props: SwapInputProps) => {
           Balance: {balance} {ticker}
         </BalanceWrapper>
       )}
-
-      <ModalList
-        position="absolute"
-        right={"0px"}
-        value={ticker}
-        onChange={setTicker}
-        options={swapTokenList}
-      />
+      {showModalList ? (
+        <ModalList
+          position="absolute"
+          right={"0px"}
+          value={ticker}
+          onChange={setTicker}
+          options={swapTokenList}
+        />
+      ) : (
+        <SelectorButton>{ticker}</SelectorButton>
+      )}
     </InputWrapper>
   )
 }
