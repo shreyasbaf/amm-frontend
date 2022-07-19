@@ -1,10 +1,9 @@
 import { Button } from "../../../../shared/button"
 import Collapse from "../../../../shared/collapse"
 import { FlexBox } from "../../../../shared/flexBox"
-import { Spacer } from "../../../../shared/shared"
+import { Spacer, Text } from "../../../../shared/shared"
 import Token from "../../../../shared/token"
 import TokenPair from "../../../../shared/tokenPair"
-import { Header3 } from "../../../../styles/styled"
 
 interface UserLiquidityProps {
   token1?: string
@@ -18,21 +17,23 @@ const UserLiquidity = (props: UserLiquidityProps) => {
     <div>
       <Collapse header={<TokenPair token1={token1} token2={token2} label />}>
         <FlexBox>
-          <Header3>Pooled {token1}:</Header3>{" "}
+          <Text variants="h6">Pooled {token1}:</Text>{" "}
           <Token token={token1} size="1.5rem" label="0.00670362" />
         </FlexBox>
         <Spacer marginTop="1rem" />
         <FlexBox>
-          <Header3>Pooled {token2}:</Header3>{" "}
+          <Text variants="h6">Pooled {token2}:</Text>{" "}
           <Token token={token2} size="1.5rem" label="0.185034" />
         </FlexBox>
         <Spacer marginTop="1rem" />
         <FlexBox>
-          <Header3>Your pool tokens:</Header3> <Header3>0.03434</Header3>
+          <Text variants="h6">Your pool tokens:</Text>{" "}
+          <Text variants="h6">0.03434</Text>
         </FlexBox>
         <Spacer marginTop="1rem" />
         <FlexBox>
-          <Header3>Your pool share:</Header3> <Header3>9.70%</Header3>
+          <Text variants="h6">Your pool share:</Text>{" "}
+          <Text variants="h6">9.70%</Text>
         </FlexBox>
         <Spacer marginTop="2rem" />
         <FlexBox>

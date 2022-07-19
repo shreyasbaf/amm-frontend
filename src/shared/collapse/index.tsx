@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { IconButton, SharedDescription, Spacer } from "../shared"
+import { IconButton, SharedDescription, Spacer, Text } from "../shared"
 import { CollapseHeader } from "./style"
 
 interface CollapseProps {
@@ -15,7 +15,7 @@ const Collapse = (props: CollapseProps) => {
     <div>
       <CollapseHeader onClick={() => setShowDescription(!showDescription)}>
         {typeof header === "string" ? (
-          <SharedDescription>{header}</SharedDescription>
+          <Text variants="h4">{header}</Text>
         ) : (
           header
         )}

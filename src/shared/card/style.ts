@@ -3,6 +3,7 @@ import { screenSizes } from "../../styles/theme"
 
 interface CardWrapperProps {
   cardMaxWidth?: number | string
+  backgroundColor?: string
 }
 
 export const CardWrapper = styled.div<CardWrapperProps>`
@@ -14,13 +15,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   margin: 0 auto;
   min-height: auto;
   padding: 2rem 3rem;
-  background: #151b24;
+  background: ${(props) => props.backgroundColor || `#151b24`};
   transition: all 300ms ease-in-out;
   border-radius: 12px;
-
-  label {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 42px;
-  }
 `

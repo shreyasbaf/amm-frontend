@@ -1,3 +1,4 @@
+import { Spacer, Text } from "../shared"
 import { TokenWrapper } from "./style"
 
 interface TokenProps {
@@ -16,7 +17,13 @@ const Token = (props: TokenProps) => {
         src={require(`../../assets/tokens/${token?.toLowerCase()}.png`)}
         alt={token}
       />
-      {label ? <span>{label}</span> : null}
+      {label ? (
+        <Spacer marginLeft="0.5rem">
+          <Text variants="normal" color={props.labelColor}>
+            {label}
+          </Text>
+        </Spacer>
+      ) : null}
     </TokenWrapper>
   )
 }

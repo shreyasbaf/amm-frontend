@@ -9,6 +9,7 @@ import { useGetUserBalance } from "../../../../shared/hooks/useGetUserBalance"
 import { useSwap } from "../../../../shared/hooks/useSwap"
 import { IconButton, Spacer } from "../../../../shared/shared"
 import SwapInput from "../swapInput"
+import SwapSetting from "../swapSetting"
 
 const tokens = [
   { name: "BNB", value: "BNB" },
@@ -124,7 +125,7 @@ const Swap: React.FC = () => {
   }
 
   return (
-    <Card title="Swap">
+    <Card title="Swap" rightComponent={<SwapSetting />}>
       <SwapInput
         position="top"
         switchSwap={switchSwap}

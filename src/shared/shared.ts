@@ -178,3 +178,50 @@ export const StyledSlider = styled.input.attrs({ type: "range" })`
     }
   }
 `
+
+const TextVariants = {
+  h1: {
+    fontSize: `6rem`,
+    fontWeight: 300,
+  },
+  h2: {
+    fontSize: `3.75rem`,
+    fontWeight: 300,
+  },
+  h3: {
+    fontSize: `3rem`,
+    fontWeight: 400,
+  },
+  h4: {
+    fontSize: `2.25rem`,
+    fontWeight: 400,
+  },
+  h5: {
+    fontSize: `1.5rem`,
+    fontWeight: 400,
+  },
+  h6: {
+    fontSize: `1.25rem`,
+    fontWeight: 400,
+  },
+  normal: {
+    fontSize: `1rem`,
+    fontWeight: 400,
+  },
+}
+
+interface TextProps {
+  size?: number | string
+  weight?: number | string
+  variants?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal"
+  color?: string
+}
+
+export const Text = styled.text<TextProps>`
+  font-size: ${(props) =>
+    props.size || (props.variants && TextVariants[props.variants].fontSize)};
+  font-weight: ${(props) =>
+    props.weight ||
+    (props.variants && TextVariants[props.variants].fontWeight)};
+  color: ${(props) => props.color};
+`

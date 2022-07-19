@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { Spacer } from "../../shared/shared"
+import { Spacer, Text } from "../../shared/shared"
 import Liquidity from "./components/liquidity"
 import Swap from "./components/swap"
+
 import { TabButton, TabWrapper } from "./components/tab/style"
 
 const Exchange: React.FC = () => {

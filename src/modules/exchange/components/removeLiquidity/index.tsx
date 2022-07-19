@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Button } from "../../../../shared/button"
-import Card from "../../../../shared/card"
 import { FlexBox } from "../../../../shared/flexBox"
 import {
   IconButton,
