@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core"
+import { Button } from "../../../../shared/button"
 import ModalList from "../../../../shared/modalList"
 import { SelectorButton } from "../../../../shared/modalList/style"
 import { StyledInput } from "../../../../shared/styledInput"
@@ -17,6 +18,9 @@ interface SwapInputProps {
   setTicker?: any
   position?: "top" | "bottom"
   showModalList?: boolean
+  setTokenValue: React.Dispatch<
+    React.SetStateAction<string | number | undefined>
+  >
 }
 
 const SwapInput = (props: SwapInputProps) => {
@@ -30,6 +34,7 @@ const SwapInput = (props: SwapInputProps) => {
     setTicker,
     position,
     showModalList,
+    setTokenValue,
   } = props
 
   const { account } = useWeb3React()
@@ -37,6 +42,9 @@ const SwapInput = (props: SwapInputProps) => {
   return (
     <InputWrapper position={position} switchSwap={switchSwap}>
       <StyledInput fullWidth value={tokenValue} onChange={onChangeInput} />
+      <div className="maxButton">
+        <Button onClick={() => setTokenValue(balance)}>Max</Button>
+      </div>
       {balance && (
         <BalanceWrapper account={account ? true : false}>
           Balance: {balance} {ticker}

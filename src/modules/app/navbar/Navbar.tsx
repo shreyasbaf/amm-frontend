@@ -24,8 +24,8 @@ export const Navbar = () => {
       </div>
       <div>
         <Navigations>
-          <Link to={rootPath}>Swap</Link>
-          <Link to={poolPath}>Pool</Link>
+          <Link to={rootPath}>Market</Link>
+          <Link to={poolPath}>Farm</Link>
         </Navigations>
       </div>
       <div>

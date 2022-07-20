@@ -48,6 +48,11 @@ export const InputWrapper = styled.div<InputWrapperProps>`
         : MoveBottomAnimation(props.switchSwap))}
     0.5s;
   animation-fill-mode: forwards;
+
+  .maxButton {
+    position: absolute;
+    right: 8rem;
+  }
 `
 
 interface BalanceWrapperProps {

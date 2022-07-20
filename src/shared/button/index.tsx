@@ -4,7 +4,7 @@ interface ButtonProps {
   children?: React.ReactNode
   btnType?: buttonTypes
   align?: "center" | "start" | "end"
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
   fullWidth?: boolean
   width?: string
   disabled?: boolean

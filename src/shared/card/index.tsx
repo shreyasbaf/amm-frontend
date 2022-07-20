@@ -1,6 +1,5 @@
 import React from "react"
 import { FlexRow } from "../../styles/styled"
-import { FlexBox } from "../flexBox"
 import { Spacer, Text } from "../shared"
 import { CardWrapper } from "./style"
 

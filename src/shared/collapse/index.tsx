@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { IconButton, SharedDescription, Spacer, Text } from "../shared"
+import { IconButton, Spacer, Text } from "../shared"
 import { CollapseHeader, CollapseWrapper } from "./style"
 
 interface CollapseProps {
-  header?: string | React.ReactNode | undefined
+  header?: string | React.ReactNode
   children?: React.ReactNode
   iconSrc?: string
 }
