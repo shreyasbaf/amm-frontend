@@ -9,7 +9,7 @@ interface InputWrapperProps {
 
 const MoveTopAnimation = (switchSwap: boolean | undefined) => keyframes`
   0%{
-    transform: ${switchSwap ? `translateY(0px)` : `translateY(135px)`} 
+    transform: ${switchSwap ? `translateY(0px)` : `translateY(115px)`} 
   }
 
   50%{
@@ -17,13 +17,13 @@ const MoveTopAnimation = (switchSwap: boolean | undefined) => keyframes`
   }
 
   100%{
-    transform: ${switchSwap ? `translateY(135px)` : `translateY(0px)`} 
+    transform: ${switchSwap ? `translateY(115px)` : `translateY(0px)`} 
   }
 `
 
 const MoveBottomAnimation = (switchSwap: boolean | undefined) => keyframes`
   0%{
-    transform: ${switchSwap ? `translateY(0px)` : `translateY(-135px)`} 
+    transform: ${switchSwap ? `translateY(0px)` : `translateY(-115px)`} 
   }
 
   50%{
@@ -31,7 +31,7 @@ const MoveBottomAnimation = (switchSwap: boolean | undefined) => keyframes`
   }
 
   100%{
-    transform: ${switchSwap ? `translateY(-135px)` : `translateY(0px)`} 
+    transform: ${switchSwap ? `translateY(-115px)` : `translateY(0px)`} 
   }
 `
 

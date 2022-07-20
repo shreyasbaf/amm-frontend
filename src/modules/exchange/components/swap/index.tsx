@@ -4,10 +4,12 @@ import { BUSD_ADDRESS } from "../../../../blockchain/privateInstance/busd"
 import { BUST_ADDRESS } from "../../../../blockchain/privateInstance/bust"
 import { Button } from "../../../../shared/button"
 import Card from "../../../../shared/card"
+import Collapse from "../../../../shared/collapse"
 import { isValid } from "../../../../shared/helpers/util"
 import { useGetUserBalance } from "../../../../shared/hooks/useGetUserBalance"
 import { useSwap } from "../../../../shared/hooks/useSwap"
-import { IconButton, Spacer } from "../../../../shared/shared"
+import { IconButton, Spacer, Text } from "../../../../shared/shared"
+import { FlexRow } from "../../../../styles/styled"
 import SwapInput from "../swapInput"
 import SwapSetting from "../swapSetting"
 
@@ -162,6 +164,24 @@ const Swap: React.FC = () => {
       />
 
       <Spacer marginTop="2rem" />
+
+      <Collapse
+        header={
+          <Text variants="h5">
+            1{ticker1} = 0.001{ticker2}
+          </Text>
+        }>
+        <FlexRow justifyContent={`space-between`}>
+          <Text variants="h6">Expected Output </Text>
+          <Text variants="h6">1{ticker2}</Text>
+        </FlexRow>
+        <Spacer marginTop="0.5rem" />
+        <FlexRow justifyContent={`space-between`}>
+          <Text variants="h6">Price Impact</Text>
+          <Text variants="h6">0.03%</Text>
+        </FlexRow>
+      </Collapse>
+      <Spacer marginTop="1rem" />
 
       <Button
         disabled={Number(token0) && Number(token1) ? false : true}

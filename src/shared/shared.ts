@@ -149,7 +149,8 @@ const RotateAnimation = (switchSwap: boolean | undefined) => keyframes`
 `
 
 export const IconButton = styled.img<IconButtonProps>`
-  height: 3rem;
+  height: 1.5rem;
+  width: 1.5rem;
   cursor: pointer;
   animation: ${(props) => RotateAnimation(props.switchSwap)} 0.5s;
   animation-fill-mode: forwards;

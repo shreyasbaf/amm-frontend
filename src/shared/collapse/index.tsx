@@ -20,7 +20,7 @@ const Collapse = (props: CollapseProps) => {
           header
         )}
         <IconButton
-          src={iconSrc || require("../../assets/icons/arrow-down-icon.svg")}
+          src={iconSrc || require("../../assets/icons/down-icon.svg")}
         />
       </CollapseHeader>
       {showDescription ? (
