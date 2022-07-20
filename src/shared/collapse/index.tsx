@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { IconButton, SharedDescription, Spacer, Text } from "../shared"
-import { CollapseHeader } from "./style"
+import { CollapseHeader, CollapseWrapper } from "./style"
 
 interface CollapseProps {
   header?: string | React.ReactNode | undefined
@@ -10,25 +10,31 @@ interface CollapseProps {
 
 const Collapse = (props: CollapseProps) => {
   const { header, children, iconSrc } = props
-  const [showDescription, setShowDescription] = useState(false)
+  const [showDescription, setShowDescription] = useState<boolean | undefined>()
   return (
-    <div>
-      <CollapseHeader onClick={() => setShowDescription(!showDescription)}>
+    <CollapseWrapper showDescription={showDescription}>
+      <CollapseHeader
+        onClick={() => setShowDescription(!showDescription)}
+        showDescription={showDescription}>
         {typeof header === "string" ? (
           <Text variants="h4">{header}</Text>
         ) : (
           header
         )}
         <IconButton
+          switchSwap={showDescription}
           src={iconSrc || require("../../assets/icons/down-icon.svg")}
         />
       </CollapseHeader>
-      {showDescription ? (
-        <>
-          <Spacer marginTop="2rem" /> {children}
-        </>
-      ) : null}
-    </div>
+
+      <div className="expanded">
+        {showDescription && (
+          <>
+            <Spacer marginTop="2rem" /> {children}
+          </>
+        )}
+      </div>
+    </CollapseWrapper>
   )
 }
 
