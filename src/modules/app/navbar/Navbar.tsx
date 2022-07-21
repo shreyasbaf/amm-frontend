@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom"
-import {
-  HeaderContainer,
-  LogoContainer,
-  Navigations,
-  NetworkContainer,
-} from "./style"
+import { HeaderContainer, LogoContainer, Navigations } from "./style"
 import { rapidInnovationLogoURL } from "../../../shared/utility"
-import { poolPath, rootPath } from "../../../logic/paths"
+import { farmPath, rootPath } from "../../../logic/paths"
 import ConnectWallet from "../../../shared/connectwallet/ConnectWallet"
 import { useWeb3React } from "@web3-react/core"
 import { Button } from "../../../shared/button"
@@ -25,7 +20,7 @@ export const Navbar = () => {
       <div>
         <Navigations>
           <Link to={rootPath}>Market</Link>
-          <Link to={poolPath}>Farm</Link>
+          <Link to={farmPath}>Farm</Link>
         </Navigations>
       </div>
       <div>

@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components"
-import { colors } from "../../../../styles/theme"
+import { colors } from "../../styles/theme"
 
 interface InputWrapperProps {
   margin?: string
@@ -51,7 +51,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
 
   .maxButton {
     position: absolute;
-    right: 8rem;
+    right: 8.5rem;
   }
 `
 
@@ -78,4 +78,32 @@ export const BalanceWrapper = styled.div<BalanceWrapperProps>`
   color: ${colors.white};
   animation: ${(props) => MoveUpAnimation(props)} 0.5s ease-out;
   animation-fill-mode: forwards;
+`
+
+export const SelectorButton = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: ${colors.actionInfo};
+  height: 3.5rem;
+  width: 8rem;
+  padding: 0rem 1rem;
+  border-radius: 0px 0.3rem 0.3rem 0px;
+  white-space: nowrap;
+`
+
+interface TickerContainerProps {
+  onChange?: React.MouseEventHandler<HTMLButtonElement> | undefined
+}
+
+export const TokenContainer = styled.div<TickerContainerProps>`
+  display: flex;
+  margin: 12px 16px;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(47, 57, 74, 0.5);
+  :hover {
+    background: rgb(65, 76, 94);
+  }
 `

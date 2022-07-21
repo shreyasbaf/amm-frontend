@@ -8,11 +8,11 @@ import TokenPair from "../../../../shared/tokenPair"
 interface UserLiquidityProps {
   token1?: string
   token2?: string
-  setRemoveLiquidity?: any
+  onRemoveClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const UserLiquidity = (props: UserLiquidityProps) => {
-  const { token1, token2, setRemoveLiquidity } = props
+  const { token1, token2, onRemoveClick } = props
   return (
     <div>
       <Collapse header={<TokenPair token1={token1} token2={token2} label />}>
@@ -38,7 +38,7 @@ const UserLiquidity = (props: UserLiquidityProps) => {
         <Spacer marginTop="2rem" />
         <FlexBox>
           <Button width="49%">Add</Button>
-          <Button width="49%" onClick={() => setRemoveLiquidity(true)}>
+          <Button width="49%" onClick={onRemoveClick}>
             Remove
           </Button>
         </FlexBox>

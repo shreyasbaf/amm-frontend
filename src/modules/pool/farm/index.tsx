@@ -8,7 +8,7 @@ import { Spacer, Text } from "../../../shared/shared"
 import TokenPair from "../../../shared/tokenPair"
 import { FlexCol, FlexRow } from "../../../styles/styled"
 import { screenSizes } from "../../../styles/theme"
-import SwapInput from "../../exchange/components/swapInput"
+import SwapInput from "../../../shared/swapInput"
 import { FarmInfo } from "./style"
 
 const Farm = () => {

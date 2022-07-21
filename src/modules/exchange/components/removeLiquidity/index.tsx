@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Button } from "../../../../shared/button"
+import Card from "../../../../shared/card"
 import { FlexBox } from "../../../../shared/flexBox"
 import {
   IconButton,
@@ -14,7 +15,7 @@ const RemoveLiquidity = () => {
   const [percentage, setPercentage] = useState(0)
   const buttonPercentageValues = [25, 50, 75, 100]
   return (
-    <>
+    <Card title="Liquidity">
       <SharedTitle>{percentage}%</SharedTitle>
       <StyledSlider
         onChange={(e) => setPercentage(Number(e.target.value))}
@@ -29,9 +30,7 @@ const RemoveLiquidity = () => {
         ))}
       </FlexBox>
       <Spacer marginTop="2rem" marginBottom="2rem">
-        <IconButton
-          src={require("../../../../assets/icons/arrow-down-icon.svg")}
-        />
+        <IconButton src={require("../../../../assets/icons/down-icon.svg")} />
       </Spacer>
       <FlexBox>
         <SharedDescription>12.121</SharedDescription>
@@ -47,7 +46,7 @@ const RemoveLiquidity = () => {
         <Button width="49%">Approve</Button>
         <Button width="49%">Remove</Button>
       </FlexBox>
-    </>
+    </Card>
   )
 }
 

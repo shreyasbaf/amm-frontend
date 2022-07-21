@@ -2,6 +2,7 @@ import { useWeb3React } from "@web3-react/core"
 import React, { useEffect, useState } from "react"
 import { BUSD_ADDRESS } from "../../../../blockchain/privateInstance/busd"
 import { BUST_ADDRESS } from "../../../../blockchain/privateInstance/bust"
+import { tokens } from "../../../../blockchain/tokens"
 import { Button } from "../../../../shared/button"
 import Card from "../../../../shared/card"
 import Collapse from "../../../../shared/collapse"
@@ -10,23 +11,15 @@ import { useGetUserBalance } from "../../../../shared/hooks/useGetUserBalance"
 import { useSwap } from "../../../../shared/hooks/useSwap"
 import { IconButton, Spacer, Text } from "../../../../shared/shared"
 import { FlexRow } from "../../../../styles/styled"
-import SwapInput from "../swapInput"
+import SwapInput from "../../../../shared/swapInput"
 import SwapSetting from "../swapSetting"
 
-const tokens = [
-  { name: "BNB", value: "BNB" },
-  { name: "BUSD", value: "BUSD" },
-  { name: "USDC", value: "USDC" },
-  { name: "USDT", value: "USDT" },
-  { name: "BUST", value: "BUST" },
-]
-
 const Swap: React.FC = () => {
-  const [ticker1, setTicker1] = useState<string>(tokens[1].name)
-  const [ticker2, setTicker2] = useState<string>(tokens[4].name)
+  const [ticker1, setTicker1] = useState<string>(tokens["BUSD"].name)
+  const [ticker2, setTicker2] = useState<string>(tokens["BUST"].name)
   const [switchSwap, setSwitchSwap] = useState<boolean | undefined>()
-  const [token0, setToken0] = useState<string | number | undefined>("")
-  const [token1, setToken1] = useState<string | number | undefined>("")
+  const [token0, setToken0] = useState<string>("")
+  const [token1, setToken1] = useState<string>("")
   const [token0Address, setToken0Address] = useState<string>(BUSD_ADDRESS)
   const [token1Address, setToken1Address] = useState<string>(BUST_ADDRESS)
   const [busdBalance, setBusdBalance] = useState<string>("0")
@@ -137,7 +130,9 @@ const Swap: React.FC = () => {
         onChangeInput={onChangeToken0}
         setTicker={setTicker1}
         balance={busdBalance}
-        swapTokenList={tokens.filter((val) => val.value !== ticker2)}
+        swapTokenList={Object.values(tokens).filter(
+          (val) => val.name !== ticker2
+        )}
         showModalList
       />
 
@@ -161,7 +156,9 @@ const Swap: React.FC = () => {
         onChangeInput={onChangeToken1}
         setTicker={setTicker2}
         balance={bustBalance}
-        swapTokenList={tokens.filter((val) => val.value !== ticker1)}
+        swapTokenList={Object.values(tokens).filter(
+          (val) => val.name !== ticker1
+        )}
         showModalList
       />
 

@@ -1,24 +1,35 @@
-import React, { useState } from "react"
-import { Spacer, Text } from "../../shared/shared"
+import { Link, useLocation, useParams } from "react-router-dom"
+import { liquidityPath, rootPath } from "../../logic/paths"
+import { Spacer, TabButton } from "../../shared/shared"
+import { FlexRow } from "../../styles/styled"
+import AddLiquidity from "./components/addLiquidity"
 import Liquidity from "./components/liquidity"
+import RemoveLiquidity from "./components/removeLiquidity"
 import Swap from "./components/swap"
 
-import { TabButton, TabWrapper } from "./components/tab/style"
-
 const Exchange: React.FC = () => {
-  const [swapTab, setSwapTab] = useState(true)
+  const { pathname } = useLocation()
+  const { token1, token2 } = useParams()
+
   return (
     <>
-      <TabWrapper>
-        <TabButton active={swapTab} onClick={() => setSwapTab(true)}>
+      <FlexRow justifyContent={`center`}>
+        <TabButton to={rootPath} active={pathname === rootPath}>
           Swap
         </TabButton>
-        <TabButton active={!swapTab} onClick={() => setSwapTab(false)}>
+        <TabButton to={liquidityPath} active={pathname.includes(liquidityPath)}>
           Liquidity
         </TabButton>
-      </TabWrapper>
+      </FlexRow>
       <Spacer marginTop="56px" />
-      {swapTab ? <Swap /> : <Liquidity />}
+      {pathname === rootPath && <Swap />}
+      {pathname.includes(liquidityPath) && (token1 || token2) && (
+        <AddLiquidity />
+      )}
+
+      {pathname.includes("remove") && (token1 || token2) && <RemoveLiquidity />}
+
+      {pathname === liquidityPath && <Liquidity />}
     </>
   )
 }

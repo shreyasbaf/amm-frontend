@@ -1,26 +1,47 @@
 import { Route, Routes, Navigate } from "react-router-dom"
-import { poolPath, rootPath } from "../../../logic/paths"
+import {
+  farmPath,
+  liquidityAddPath,
+  liquidityPath,
+  liquidityRemovePath,
+  rootPath,
+  swapPath,
+} from "../../../logic/paths"
 import PageContainer from "../../../shared/pageContainer"
 import Exchange from "../../exchange"
 import Pool from "../../pool/Pool"
 
-const notFoundRoute: RouteDefinition = {
+/* const notFoundRoute: RouteDefinition = {
   path: "*",
   element: <div />,
   protected: false,
   title: "",
+} */
+const notFoundRoute: RouteDefinition = {
+  path: "*",
+  element: <div />,
+  protected: false,
+  redirect: rootPath,
+  title: "Pool",
+  pathType: 0,
 }
 
 export const routes: RouteDefinition[] = [
   {
-    path: rootPath,
+    path: [
+      rootPath,
+      liquidityPath,
+      liquidityAddPath,
+      liquidityRemovePath,
+      swapPath,
+    ],
     element: Exchange,
     protected: false,
     title: "Swap",
     pathType: 0,
   },
   {
-    path: poolPath,
+    path: farmPath,
     element: Pool,
     protected: false,
     redirect: rootPath,
@@ -30,7 +51,7 @@ export const routes: RouteDefinition[] = [
 ].concat(notFoundRoute as any) // Ensure that notFound is the last route
 
 export interface RouteDefinition {
-  path: string
+  path: string | string[]
   protected?: boolean
   redirect?: string
   element?: any
@@ -74,7 +95,14 @@ export const RoutesComponent: React.FC<Props & RoutesProps> = () => {
 
   const mapRoutes = (route: RouteDefinition, i: number) => {
     const render = getRouteRenderWithAuth(isLoggedIn, route)
-    return <Route key={i} path={route.path} {...render} />
+    if (typeof route.path === "string") {
+      return <Route key={i} path={route.path} {...render} />
+    } else {
+      /* 
+        Multiple Route on same component
+      */
+      return route.path.map((path) => <Route key={i} path={path} {...render} />)
+    }
   }
 
   return (

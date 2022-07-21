@@ -1,4 +1,4 @@
-import { SharedDescription, Spacer } from "../shared"
+import { Spacer, Text } from "../shared"
 import Token from "../token"
 import { TokenPairWrapper } from "./style"
 
@@ -18,11 +18,11 @@ const TokenPair = (props: TokenPairProps) => {
       <div className="tokenPair2">
         <Token token={token2} size={size} />
         {label ? (
-          <SharedDescription>
+          <Text variants="h6">
             <Spacer marginLeft="1rem">
               {token1} / {token2}
             </Spacer>
-          </SharedDescription>
+          </Text>
         ) : null}
       </div>
     </TokenPairWrapper>

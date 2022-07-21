@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styled, { keyframes } from "styled-components"
 import { colors } from "../styles/theme"
 
@@ -218,11 +219,28 @@ interface TextProps {
   color?: string
 }
 
-export const Text = styled.text<TextProps>`
+export const Text = styled.span<TextProps>`
   font-size: ${(props) =>
     props.size || (props.variants && TextVariants[props.variants].fontSize)};
   font-weight: ${(props) =>
     props.weight ||
     (props.variants && TextVariants[props.variants].fontWeight)};
   color: ${(props) => props.color};
+`
+
+interface TabButtonProps {
+  active?: boolean
+}
+
+export const TabButton = styled(Link)<TabButtonProps>`
+  cursor: pointer;
+  background-color: ${colors.gray};
+  border-radius: 12px 12px 0px 0px;
+  width: 12rem;
+  margin: 0px 12px;
+  position: relative;
+  z-index: 1;
+  border-bottom: ${(props) => props.active && `5px solid red`};
+  padding: 1rem;
+  text-align: center;
 `
