@@ -61,7 +61,7 @@ export const useSwap = () => {
         }
     }
 
-    const swap = async (admin: string | any, token0Price: string, token1Price: string, token0Address: string, token1Address: string, swapType: string) => {
+    const swap = async (admin: string | any, token0Price: string | any, token1Price: string | any, token0Address: string, token1Address: string, swapType: string) => {
         try {
             const token0Price_wei = new BigNumber(token0Price).times(10 ** 18)
             const token1Price_wei = new BigNumber(token1Price).times(10 ** 18)
