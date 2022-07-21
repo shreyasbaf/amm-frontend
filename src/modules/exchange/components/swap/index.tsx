@@ -18,8 +18,14 @@ const Swap: React.FC = () => {
   const [ticker1, setTicker1] = useState<string>(tokens["BUSD"].name)
   const [ticker2, setTicker2] = useState<string>(tokens["BUST"].name)
   const [switchSwap, setSwitchSwap] = useState<boolean | undefined>()
-  const [token0, setToken0] = useState<string>("")
-  const [token1, setToken1] = useState<string>("")
+  const [token0, setToken0] = useState<string | number | undefined>("")
+  const [token1, setToken1] = useState<string | number | undefined>("")
+  const [token0InitalImpact, setToken0InitialImpact] = useState<
+    string | number | undefined
+  >("1")
+  const [token1InitialImpact, setToken1InitialImpact] = useState<
+    string | number | undefined
+  >("1")
   const [token0Address, setToken0Address] = useState<string>(BUSD_ADDRESS)
   const [token1Address, setToken1Address] = useState<string>(BUST_ADDRESS)
   const [busdBalance, setBusdBalance] = useState<string>("0")
@@ -43,7 +49,10 @@ const Swap: React.FC = () => {
       }
     }
 
-    if (account) fetchBalance()
+    if (account) {
+      fetchBalance()
+    }
+    getOtherTokenInitialValue("BUSD")
   }, [account])
 
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,13 +79,37 @@ const Swap: React.FC = () => {
           : t
       let value: string = e.target.value
       setToken1(value)
-      const res = await getOtherTokenPrice(value, token0Address, token1Address)
+      const res = swappingUI
+        ? await getOtherTokenPrice(value, token0Address, token1Address)
+        : await getOtherTokenPrice(value, token1Address, token0Address)
       if (res) setToken0(res)
       else setToken0("")
     }
   }
 
+  const getOtherTokenInitialValue = async (tokenType: string) => {
+    try {
+      if (tokenType === "BUSD") {
+        setToken0InitialImpact(1)
+        const res = await getOtherTokenPrice(1, token0Address, token1Address)
+        if (res) setToken1InitialImpact(Number(res).toFixed(2))
+      } else {
+        setToken1InitialImpact(1)
+        const res = await getOtherTokenPrice(1, token0Address, token1Address)
+        if (res) setToken0InitialImpact(Number(res).toFixed(2))
+      }
+    } catch (err) {
+      console.error("getOtherTokenInitialValue", err)
+    }
+  }
+
   useEffect(() => {
+    if (swappingUI) {
+      getOtherTokenInitialValue("BUST")
+    } else {
+      getOtherTokenInitialValue("BUSD")
+    }
+
     const swapValues = async () => {
       if (swappingUI) {
         const res = await getOtherTokenPrice(
@@ -167,7 +200,9 @@ const Swap: React.FC = () => {
       <Collapse
         header={
           <Text variants="h5">
-            1{ticker1} = 0.001{ticker2}
+            {!swappingUI
+              ? `${token0InitalImpact}${ticker1} = ${token1InitialImpact}${ticker2}`
+              : `${token1InitialImpact}${ticker2} = ${token0InitalImpact}${ticker1}`}
           </Text>
         }>
         <FlexRow justifyContent={`space-between`}>
