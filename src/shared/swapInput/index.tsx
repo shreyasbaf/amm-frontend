@@ -92,14 +92,18 @@ const SwapInput = (props: SwapInputProps) => {
               setTicker(val.name)
               setOpenModal(false)
 
-              const path = pathname.split("/")
+              const path = pathname.replace("/", "").split("/")
+
+              console.log(pathname)
+              console.log(path)
 
               if (position === "top") {
-                path[2] = val.name
+                navigate(`/${path[0]}/${val.name}/${token2}`)
               } else {
-                path[3] = val.name
+                // console.log(path[1])
+                // console.log(`${path[1]}/${token1}/${val.name}`)
+                navigate(`/${path[0]}/${token1}/${val.name}`)
               }
-              navigate(path.toString().replaceAll(",", "/"))
             }}>
             <Token
               token={val.name}

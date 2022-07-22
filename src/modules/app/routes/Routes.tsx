@@ -5,6 +5,7 @@ import {
   liquidityPath,
   liquidityRemovePath,
   rootPath,
+  rootSwapPath,
   swapPath,
 } from "../../../logic/paths"
 import PageContainer from "../../../shared/pageContainer"
@@ -34,6 +35,7 @@ export const routes: RouteDefinition[] = [
       liquidityAddPath,
       liquidityRemovePath,
       swapPath,
+      rootSwapPath,
     ],
     element: Exchange,
     protected: false,

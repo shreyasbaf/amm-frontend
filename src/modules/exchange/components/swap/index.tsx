@@ -199,20 +199,20 @@ const Swap: React.FC = () => {
 
       <Collapse
         header={
-          <Text variants="h5">
+          <Text variants="h6">
             {!swappingUI
-              ? `${token0InitalImpact}${ticker1} = ${token1InitialImpact}${ticker2}`
-              : `${token1InitialImpact}${ticker2} = ${token0InitalImpact}${ticker1}`}
+              ? `${token0InitalImpact} ${ticker1} = ${token1InitialImpact} ${ticker2}`
+              : `${token1InitialImpact} ${ticker2} = ${token0InitalImpact} ${ticker1}`}
           </Text>
         }>
         <FlexRow justifyContent={`space-between`}>
-          <Text variants="h6">Expected Output </Text>
-          <Text variants="h6">1{ticker2}</Text>
+          <Text variants="normal">Expected Output </Text>
+          <Text variants="normal">1{ticker2}</Text>
         </FlexRow>
         <Spacer marginTop="0.5rem" />
         <FlexRow justifyContent={`space-between`}>
-          <Text variants="h6">Price Impact</Text>
-          <Text variants="h6">0.03%</Text>
+          <Text variants="normal">Price Impact</Text>
+          <Text variants="normal">0.03%</Text>
         </FlexRow>
       </Collapse>
       <Spacer marginTop="1rem" />

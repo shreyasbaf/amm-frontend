@@ -9,6 +9,7 @@ export interface UserUrlProps extends UserProps {
 
 // Basic
 export const rootPath: UrlPath<{}> = "/"
+export const rootSwapPath: UrlPath<{}> = "/:token1/:token2"
 export const liquidityPath: UrlPath<{}> = "/liquidity"
 export const liquidityRemovePath: UrlPath<{}> = "/remove/:token1/:token2"
 export const liquidityAddPath: UrlPath<{}> = "/liquidity/:token1/:token2"

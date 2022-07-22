@@ -2,8 +2,10 @@ import { useState } from "react"
 import { tokens } from "../../../../blockchain/tokens"
 import { Button } from "../../../../shared/button"
 import Card from "../../../../shared/card"
-import { IconButton, Spacer } from "../../../../shared/shared"
+import Collapse from "../../../../shared/collapse"
+import { IconButton, Spacer, Text } from "../../../../shared/shared"
 import SwapInput from "../../../../shared/swapInput"
+import { FlexRow } from "../../../../styles/styled"
 import SwapSetting from "../swapSetting"
 
 const AddLiquidity = () => {
@@ -36,6 +38,33 @@ const AddLiquidity = () => {
         )}
       />
       <Spacer marginTop="2rem" />
+
+      {ticker1 && ticker2 && (
+        <>
+          {" "}
+          <Collapse header={<Text variants="h6">Prices and pool share</Text>}>
+            <FlexRow justifyContent={`space-between`}>
+              <Text variants="normal">
+                {ticker1} per {ticker2}
+              </Text>
+              <Text variants="normal">27.6021</Text>
+            </FlexRow>
+            <Spacer marginTop="0.5rem" />
+            <FlexRow justifyContent={`space-between`}>
+              <Text variants="normal">
+                {ticker2} per {ticker1}
+              </Text>
+              <Text variants="normal">0.0362291</Text>
+            </FlexRow>
+            <Spacer marginTop="0.5rem" />
+            <FlexRow justifyContent={`space-between`}>
+              <Text variants="normal">Share of Pool</Text>
+              <Text variants="normal">3.03%</Text>
+            </FlexRow>
+          </Collapse>
+          <Spacer marginTop="2rem" />
+        </>
+      )}
 
       <Button fullWidth align="center">
         Supply
