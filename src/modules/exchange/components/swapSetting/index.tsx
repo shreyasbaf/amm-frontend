@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Button } from "../../../../shared/button"
 import Card from "../../../../shared/card"
 import useComponentVisible from "../../../../shared/hooks/useComponentVisible"
@@ -7,9 +8,49 @@ import { FlexRow } from "../../../../styles/styled"
 import { colors } from "../../../../styles/theme"
 import { SwapSettingCard } from "./style"
 
-const SwapSetting = () => {
+interface settingProps{
+  handleSlippage?: any,
+  handleDeadline?: any
+}
+
+const SwapSetting = (props: settingProps) => {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false)
+  const [slippageValueonChange, setSlippageValueOnChange] = useState<string>("")
+  const [deadlineValueOnChange, setDeadlineValueOnChange] = useState<string>("")
+  const { handleSlippage , handleDeadline} = props
+
+  const onChangeSlippage = (e: any) => {
+    let t = e.target.value;
+    e.target.value =
+      t.indexOf(".") >= 0
+        ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)
+        : t;
+    let value: string = e.target.value;
+
+    if (value !== "" && Number(value) >= 0 && Number(value) <= 50) {
+      handleSlippage(value);
+      setSlippageValueOnChange(value)
+    }else if (value == ""){
+      setSlippageValueOnChange("")
+    }
+  }
+
+  const onChangeDeadline = (e: any) => {
+    let t = e.target.value;
+    e.target.value =
+      t.indexOf(".") >= 0
+        ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 0)
+        : t;
+    let value: string = e.target.value;
+
+    if (value !== "" && Number(value) >= 0 && Number(value) <= 20) {
+      handleDeadline(value);
+      setDeadlineValueOnChange(value)
+    }else if (value == ""){
+      setDeadlineValueOnChange("")
+    }
+  }
 
   return (
     <SwapSettingCard>
@@ -31,14 +72,14 @@ const SwapSetting = () => {
             <Spacer marginBottom="0.5rem" />
             <FlexRow>
               <Button>Auto</Button>
-              <StyledInput />
+              <StyledInput value={slippageValueonChange} onChange={onChangeSlippage}/>
             </FlexRow>
             <Spacer marginTop="1rem" />
             <Text variants="normal">Deadline</Text>
             <Spacer marginBottom="0.5rem" />
             <FlexRow>
               <Button>Auto</Button>
-              <StyledInput />
+              <StyledInput value={deadlineValueOnChange} onChange={onChangeDeadline}/>
             </FlexRow>
           </Card>
         )}
