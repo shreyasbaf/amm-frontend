@@ -20,17 +20,15 @@ const Swap: React.FC = () => {
   const [switchSwap, setSwitchSwap] = useState<boolean | undefined>()
   const [token0, setToken0] = useState<string | number | undefined>("")
   const [token1, setToken1] = useState<string | number | undefined>("")
-  const [token0InitalImpact, setToken0InitialImpact] = useState<
-    string | number | undefined
-  >("1")
-  const [token1InitialImpact, setToken1InitialImpact] = useState<
-    string | number | undefined
-  >("1")
+  const [token0InitalImpact, setToken0InitialImpact] = useState<string | number | undefined>("1")
+  const [token1InitialImpact, setToken1InitialImpact] = useState<string | number | undefined>("1")
   const [token0Address, setToken0Address] = useState<string>(BUSD_ADDRESS)
   const [token1Address, setToken1Address] = useState<string>(BUST_ADDRESS)
   const [busdBalance, setBusdBalance] = useState<string>("0")
   const [bustBalance, setBustBalance] = useState<string>("0")
   const [swappingUI, setSwappingUI] = useState<boolean>(false)
+  const [slippage, setSlippage] = useState<string>("0.5")
+  const [deadLine, setDeadline] = useState<string>("5")
   const { getOtherTokenPrice, swap } = useSwap()
   const { getBusdBalance, getBustBalance } = useGetUserBalance()
   const { account } = useWeb3React()
@@ -55,8 +53,20 @@ const Swap: React.FC = () => {
     getOtherTokenInitialValue("BUSD")
   }, [account])
 
+  const handleSlippage = (value: string) => {
+    setSlippage((prev): any => {
+      if (value !== prev) return value
+    })
+  }
+
+  const handleDeadline = (value: string) => {
+    setDeadline((prev): any => {
+      if (value !== prev) return value
+    })
+  }
+
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    var t = e.target.value
+    let t = e.target.value
     if (isValid(t)) {
       e.target.value =
         t.indexOf(".") >= 0
@@ -140,20 +150,22 @@ const Swap: React.FC = () => {
   }
 
   const handleSwap = async () => {
-    if (Number(token0) && Number(token1)) {
+    if (Number(token0) && Number(token1) && account) {
       swap(
         account,
         token0,
         token1,
         token0Address,
         token1Address,
-        token0Address == BUSD_ADDRESS ? "BUSD" : "BUST"
+        token0Address == BUSD_ADDRESS ? "BUSD" : "BUST",
+        slippage,
+        deadLine
       )
     }
   }
 
   return (
-    <Card title="Swap" rightComponent={<SwapSetting />}>
+    <Card title="Swap" rightComponent={<SwapSetting handleSlippage={handleSlippage} handleDeadline={handleDeadline} />}>
       <SwapInput
         position="top"
         switchSwap={switchSwap}
@@ -191,7 +203,7 @@ const Swap: React.FC = () => {
         swapTokenList={Object.values(tokens).filter(
           (val) => val.name !== ticker1
         )}
-        onMaxButtonClick={() => setToken1(bustBalance)}
+        onMaxButtonClick={() => { setToken1(bustBalance) }}
         showModalList
       />
 
