@@ -1,4 +1,7 @@
+import { useWeb3React } from "@web3-react/core"
 import { useEffect, useState } from "react"
+import { BUSD_ADDRESS } from "../../../../blockchain/privateInstance/busd"
+import { BUST_ADDRESS } from "../../../../blockchain/privateInstance/bust"
 import { tokens } from "../../../../blockchain/tokens"
 import { Button } from "../../../../shared/button"
 import Card from "../../../../shared/card"
@@ -15,8 +18,10 @@ const AddLiquidity = () => {
   const [ticker2, setTicker2] = useState(tokens["BUST"].name)
   const [token0, setToken0] = useState<string | number | undefined>("")
   const [token1, setToken1] = useState<string | number | undefined>("")
-  const {getBUSTAmount, getBUSDAmount} = useAddLiquidity()
-
+  const [slippage, setSlippage] = useState<string>("0.5")
+  const [deadLine, setDeadline] = useState<string>("5")
+  const {getBUSTAmount, getBUSDAmount, addLiquidity} = useAddLiquidity()
+  const {active, account} = useWeb3React()
 
   const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let t = e.target.value
@@ -47,9 +52,31 @@ const AddLiquidity = () => {
       else setToken0("")
     }
   }
+
+  const handleSlippage = (value: string) => {
+    setSlippage((prev): any => {
+      if (value !== prev) return value
+    })
+  }
+
+  const handleDeadline = (value: string) => {
+    setDeadline((prev): any => {
+      if (value !== prev) return value
+    })
+  }
+
+  const handleAddLiquidity = async() => {
+    try{
+          if( Number(token0) && Number(token1) && account && active){
+            addLiquidity(account, token0 , token1, BUSD_ADDRESS, BUST_ADDRESS, deadLine, slippage)
+          }
+    }catch(err){
+      console.error("handleAddLiquidity", err);
+    }
+  }
   
   return (
-    <Card title="Liquidity" rightComponent={<SwapSetting />}>
+    <Card title="Liquidity" rightComponent={<SwapSetting handleSlippage={handleSlippage} handleDeadline={handleDeadline}/>}>
       <SwapInput
         position="top"
         // setTicker={setTicker1}
@@ -107,7 +134,7 @@ const AddLiquidity = () => {
         </>
       )}
 
-      <Button fullWidth align="center">
+      <Button fullWidth align="center" onClick={handleAddLiquidity}>
         Supply
       </Button>
     </Card>
