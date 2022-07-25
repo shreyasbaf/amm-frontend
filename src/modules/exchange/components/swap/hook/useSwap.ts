@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
 
-import { usePrivateInstances } from "../../blockchain/privateInstance/instances";
-import { ROUTER } from "../../blockchain/publicInstance/instance";
-import { ROUTER_ADDRESS } from "../../blockchain/publicInstance/router";
+import { usePrivateInstances } from "../../../../../blockchain/privateInstance/instances";
+import { ROUTER } from "../../../../../blockchain/publicInstance/instance";
+import { ROUTER_ADDRESS } from "../../../../../blockchain/publicInstance/router";
 
 export const useSwap = () => {
     const { BUSD, BUST } = usePrivateInstances()
