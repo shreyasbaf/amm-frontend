@@ -3,11 +3,12 @@ import { colors } from "../../styles/theme"
 
 interface InputWrapperProps {
   margin?: string
-  switchSwap?: boolean | undefined
+  switchSwap?: boolean
   position?: "top" | "bottom"
+  showModalList?: boolean
 }
 
-const MoveTopAnimation = (switchSwap: boolean | undefined) => keyframes`
+const MoveTopAnimation = (switchSwap?: boolean) => keyframes`
   0%{
     transform: ${switchSwap ? `translateY(0px)` : `translateY(115px)`} 
   }
@@ -21,7 +22,7 @@ const MoveTopAnimation = (switchSwap: boolean | undefined) => keyframes`
   }
 `
 
-const MoveBottomAnimation = (switchSwap: boolean | undefined) => keyframes`
+const MoveBottomAnimation = (switchSwap?: boolean) => keyframes`
   0%{
     transform: ${switchSwap ? `translateY(0px)` : `translateY(-115px)`} 
   }
@@ -51,7 +52,7 @@ export const InputWrapper = styled.div<InputWrapperProps>`
 
   .maxButton {
     position: absolute;
-    right: 8.5rem;
+    right: ${(props) => (props.showModalList ? `8.5rem` : `0.3rem`)};
   }
 `
 
@@ -93,7 +94,7 @@ export const SelectorButton = styled.div`
 `
 
 interface TickerContainerProps {
-  onChange?: React.MouseEventHandler<HTMLButtonElement> | undefined
+  onChange?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export const TokenContainer = styled.div<TickerContainerProps>`

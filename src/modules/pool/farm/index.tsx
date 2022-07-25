@@ -101,7 +101,7 @@ const Farm = () => {
               : ""
           }>
           <Spacer marginTop="3rem" />
-          <SwapInput ticker={`BNB-BUSD`} balance={`10.05`} />
+          <SwapInput token={`BNB-BUSD`} balance={`10.05`} />
           <Spacer marginTop="2rem" />
           <FlexBox>
             <Button width="49%">Cancel</Button>

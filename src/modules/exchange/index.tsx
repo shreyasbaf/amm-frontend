@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { liquidityPath, rootPath } from "../../logic/paths"
 import { Spacer, TabButton } from "../../shared/shared"
 import { FlexRow } from "../../styles/styled"

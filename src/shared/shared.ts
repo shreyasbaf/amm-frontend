@@ -139,7 +139,7 @@ interface IconButtonProps {
   switchSwap?: boolean
 }
 
-const RotateAnimation = (switchSwap: boolean | undefined) => keyframes`
+const RotateAnimation = (switchSwap?: boolean) => keyframes`
   0%{
     transform: ${switchSwap === false && `rotate(180deg)`} ;    
   }
@@ -235,6 +235,7 @@ interface TabButtonProps {
 export const TabButton = styled(Link)<TabButtonProps>`
   cursor: pointer;
   background-color: ${colors.gray};
+  color: ${colors.blueDark};
   border-radius: 12px 12px 0px 0px;
   width: 12rem;
   margin: 0px 12px;

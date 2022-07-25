@@ -157,15 +157,15 @@ const Swap: React.FC = () => {
       <SwapInput
         position="top"
         switchSwap={switchSwap}
-        ticker={ticker1}
-        tokenValue={token0}
-        setTokenValue={setToken0}
+        token={ticker1}
+        inputValue={token0}
         onChangeInput={onChangeToken0}
-        setTicker={setTicker1}
+        onTokenChange={(token) => setTicker1(token)}
         balance={busdBalance}
         swapTokenList={Object.values(tokens).filter(
           (val) => val.name !== ticker2
         )}
+        onMaxButtonClick={() => setToken0(busdBalance)}
         showModalList
       />
 
@@ -183,15 +183,15 @@ const Swap: React.FC = () => {
       <SwapInput
         position="bottom"
         switchSwap={switchSwap}
-        ticker={ticker2}
-        setTokenValue={setToken1}
-        tokenValue={token1}
+        token={ticker2}
+        inputValue={token1}
         onChangeInput={onChangeToken1}
-        setTicker={setTicker2}
+        onTokenChange={(token) => setTicker2(token)}
         balance={bustBalance}
         swapTokenList={Object.values(tokens).filter(
           (val) => val.name !== ticker1
         )}
+        onMaxButtonClick={() => setToken1(bustBalance)}
         showModalList
       />
 

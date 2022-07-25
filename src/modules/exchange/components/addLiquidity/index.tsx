@@ -15,8 +15,8 @@ const AddLiquidity = () => {
     <Card title="Liquidity" rightComponent={<SwapSetting />}>
       <SwapInput
         position="top"
-        setTicker={setTicker1}
-        ticker={ticker1}
+        // setTicker={setTicker1}
+        token={ticker1}
         showModalList
         swapTokenList={Object.values(tokens).filter(
           (val) => val.name !== ticker2
@@ -31,8 +31,8 @@ const AddLiquidity = () => {
       <SwapInput
         position="bottom"
         showModalList
-        ticker={ticker2}
-        setTicker={setTicker2}
+        token={ticker2}
+        // setTicker={setTicker2}
         swapTokenList={Object.values(tokens).filter(
           (val) => val.name !== ticker1
         )}
