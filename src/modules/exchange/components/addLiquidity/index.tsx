@@ -68,7 +68,7 @@ const AddLiquidity = () => {
   const handleAddLiquidity = async() => {
     try{
           if( Number(token0) && Number(token1) && account && active){
-            addLiquidity(account, token0 , token1, BUSD_ADDRESS, BUST_ADDRESS, deadLine, slippage)
+             addLiquidity(account, token0 , token1, BUSD_ADDRESS, BUST_ADDRESS, deadLine, slippage)
           }
     }catch(err){
       console.error("handleAddLiquidity", err);
