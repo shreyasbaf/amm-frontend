@@ -43,7 +43,7 @@ export const useAddLiquidity = () => {
     const approve = async (account: string, tokenType: string) => {
         try {
             const maxAllowance = new BigNumber(2).pow(256).minus(1);
-            (tokenType == "BUSD" ? BUSD : BUST).methods.approve(ROUTER_ADDRESS, maxAllowance).send({
+            await (tokenType == "BUSD" ? BUSD : BUST).methods.approve(ROUTER_ADDRESS, maxAllowance).send({
                 from: account
             }).on("transactionHash", (hash: any) => {
                 alert(hash)
@@ -58,17 +58,22 @@ export const useAddLiquidity = () => {
         }
     }
 
-    const addLiquidity = async (account: string , token0: string | any, token1: string | any, token0Address: string, token1Address: string, deadLineValue: string, slippage: string) => {
+    const addLiquidity = async (account: string, token0: string | any, token1: string | any, token0Address: string, token1Address: string, deadLineValue: string, slippage: string) => {
         try {
 
-            let checkAllowance0: any = checkAllowance(account, "BUSD")
-            checkAllowance0 = new BigNumber(checkAllowance0).dividedBy(10 ** 18)
-            let checkAllowance1: any = checkAllowance(account, "BUST")
-            checkAllowance1 = new BigNumber(checkAllowance1).dividedBy(10 ** 18)
+            let checkAllowance0: any = await checkAllowance(account, "BUSD")
+            checkAllowance0 = new BigNumber(checkAllowance0).dividedBy(10 ** 18).toFixed(0)
+            let checkAllowance1: any = await checkAllowance(account, "BUST")
+            checkAllowance1 = new BigNumber(checkAllowance1).dividedBy(10 ** 18).toFixed(0)
+            console.log({ checkAllowance0, checkAllowance1 });
 
             if (Number(checkAllowance0) < Number(token0) && Number(checkAllowance1) < Number(token1)) {
+                console.log("KKKKKK");
                 await approve(account, "BUSD")
+                console.log("IIIIIIII");
                 await approve(account, "BUST")
+                console.log("JJJJJJJJJ");
+
             } else if (Number(checkAllowance0) < Number(token0)) {
                 await approve(account, "BUSD")
             } else if (Number(checkAllowance1) < Number(token1)) {

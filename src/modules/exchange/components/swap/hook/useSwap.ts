@@ -72,20 +72,19 @@ export const useSwap = () => {
             let allowance = await checkAllowance(admin, swapType)
             allowance = new BigNumber(allowance).dividedBy(10 ** 18)
             if (Number(allowance) < Number(token0Price)) {
-                (swapType == "BUSD" ? BUSD : BUST).methods.approve(ROUTER_ADDRESS, maxAllowance.toFixed(0)).send({
+              await (swapType == "BUSD" ? BUSD : BUST).methods.approve(ROUTER_ADDRESS, maxAllowance.toFixed(0)).send({
                     from: admin
                 }).on("transactionHash", (hash: any) => {
                     alert(hash)
                 }).on("receipt", (receipt: any) => {
                     alert("approval successfull")
-                    swapType == "BUSD" ? swapExactTokensForTokens(token0Price_wei, token1Price_wei, [token0Address, token1Address], admin, deadLine, slippage)
-                        : swapTokensForExactTokens(token0Price_wei, token1Price_wei, [token0Address, token1Address], admin, deadLine, slippage)
                 }).on("error", (error: any, receipt: any) => {
                     alert("approval failed")
                 })
-            } else {
-                swapType == "BUSD" ? swapExactTokensForTokens(token0Price_wei, token1Price_wei, [token0Address, token1Address], admin, deadLine, slippage) : swapTokensForExactTokens(token0Price_wei, token1Price_wei, [token0Address, token1Address], admin, deadLine, slippage)
             }
+                
+            swapType == "BUSD" ? swapExactTokensForTokens(token0Price_wei, token1Price_wei, [token0Address, token1Address], admin, deadLine, slippage) : swapTokensForExactTokens(token0Price_wei, token1Price_wei, [token0Address, token1Address], admin, deadLine, slippage)
+            
         } catch (err) {
             console.error("swap", err);
         }
