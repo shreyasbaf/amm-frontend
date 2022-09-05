@@ -1,12 +1,11 @@
 import { useWeb3React } from "@web3-react/core"
-import { useEffect, useState } from "react"
-import { BUSD_ADDRESS } from "../../../../blockchain/privateInstance/busd"
-import { BUST_ADDRESS } from "../../../../blockchain/privateInstance/bust"
+import { useState } from "react"
+import { ABI } from "../../../../blockchain/abi/Abi"
 import { tokens } from "../../../../blockchain/tokens"
 import { Button } from "../../../../shared/button"
 import Card from "../../../../shared/card"
 import Collapse from "../../../../shared/collapse"
-import { isValid } from "../../../../shared/helpers/util"
+import { isValid, validateAndTrim } from "../../../../shared/helpers/util"
 import { IconButton, Spacer, Text } from "../../../../shared/shared"
 import SwapInput from "../../../../shared/swapInput"
 import { FlexRow } from "../../../../styles/styled"
@@ -20,37 +19,24 @@ const AddLiquidity = () => {
   const [token1, setToken1] = useState<string | number | undefined>("")
   const [slippage, setSlippage] = useState<string>("0.5")
   const [deadLine, setDeadline] = useState<string>("5")
-  const {getBUSTAmount, getBUSDAmount, addLiquidity} = useAddLiquidity()
-  const {active, account} = useWeb3React()
+  const { getBUSTAmount, getBUSDAmount, addLiquidity } = useAddLiquidity()
+  const { active, account, library } = useWeb3React()
 
-  const onChangeToken0 = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    let t = e.target.value
-    if (isValid(t)) {
-      e.target.value =
-        t.indexOf(".") >= 0
-          ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 19)
-          : t
-      let value: string = e.target.value
-      setToken0(value)
-      const res = await getBUSTAmount(value)
-      if (res) setToken1(res)
-      else setToken1("")
-    }
+  const changingInputVal0 = async (val: React.ChangeEvent<HTMLInputElement>) => {
+    const value: any = validateAndTrim(val)
+    setToken0(value)
+    const res = await getBUSTAmount(value)
+    if (res) setToken1(res)
+    else setToken1("")
   }
 
-  const onChangeToken1 = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    let t = e.target.value
-    if (isValid(t)) {
-      e.target.value =
-        t.indexOf(".") >= 0
-          ? t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 19)
-          : t
-      let value: string = e.target.value
-      setToken1(value)
-      const res = await getBUSDAmount(value)
-      if (res) setToken0(res)
-      else setToken0("")
-    }
+
+  const changingInputVal1 = async (val: React.ChangeEvent<HTMLInputElement>) => {
+    const value: any = validateAndTrim(val)
+    setToken1(value)
+    const res = await getBUSDAmount(value)
+    if (res) setToken0(res)
+    else setToken0("")
   }
 
   const handleSlippage = (value: string) => {
@@ -65,32 +51,32 @@ const AddLiquidity = () => {
     })
   }
 
-  const handleAddLiquidity = async() => {
-    try{
-          if( Number(token0) && Number(token1) && account && active){
-             addLiquidity(account, token0 , token1, BUSD_ADDRESS, BUST_ADDRESS, deadLine, slippage)
-          }
-    }catch(err){
+  const handleAddLiquidity = async () => {
+    try {
+      if (Number(token0) && Number(token1) && account && active) {
+        addLiquidity(account, token0, token1, ABI.BUSD.address, ABI.BUST.address, deadLine, slippage, library)
+      }
+    } catch (err) {
       console.error("handleAddLiquidity", err);
     }
   }
-  
+
   return (
-    <Card title="Liquidity" rightComponent={<SwapSetting handleSlippage={handleSlippage} handleDeadline={handleDeadline}/>}>
+    <Card title="Liquidity" rightComponent={<SwapSetting handleSlippage={handleSlippage} handleDeadline={handleDeadline} />}>
       <SwapInput
         position="top"
         // setTicker={setTicker1}
         token={ticker1}
         showModalList
         inputValue={token0}
-        onChangeInput={onChangeToken0}
+        onChangeInput={changingInputVal0}
         swapTokenList={Object.values(tokens).filter(
           (val) => val.name !== ticker2
         )}
       />
       <Spacer marginTop="1rem" marginBottom="1rem">
         <IconButton
-          onClick={() => {}}
+          onClick={() => { }}
           src={require("../../../../assets/icons/add-icon.svg")}
         />
       </Spacer>
@@ -100,7 +86,7 @@ const AddLiquidity = () => {
         token={ticker2}
         // setTicker={setTicker2}
         inputValue={token1}
-        onChangeInput={onChangeToken1}
+        onChangeInput={changingInputVal1}
         swapTokenList={Object.values(tokens).filter(
           (val) => val.name !== ticker1
         )}
