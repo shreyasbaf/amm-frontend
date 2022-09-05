@@ -1,18 +1,17 @@
 import { useWeb3React } from "@web3-react/core"
 import React, { useEffect, useState } from "react"
-import { BUSD_ADDRESS } from "../../../../blockchain/privateInstance/busd"
-import { BUST_ADDRESS } from "../../../../blockchain/privateInstance/bust"
 import { tokens } from "../../../../blockchain/tokens"
 import { Button } from "../../../../shared/button"
 import Card from "../../../../shared/card"
 import Collapse from "../../../../shared/collapse"
 import { isValid } from "../../../../shared/helpers/util"
-import { useGetUserBalance } from "../../../../shared/hooks/useGetUserBalance"
 import { useSwap } from "./hook/useSwap"
 import { IconButton, Spacer, Text } from "../../../../shared/shared"
 import { FlexRow } from "../../../../styles/styled"
 import SwapInput from "../../../../shared/swapInput"
 import SwapSetting from "../swapSetting"
+import { ABI } from "../../../../blockchain/abi/Abi"
+import { useGetBalance } from "../../../../blockchain/helperMethods/useGetBalance"
 
 const Swap: React.FC = () => {
   const [ticker1, setTicker1] = useState<string>(tokens["BUSD"].name)
@@ -22,23 +21,23 @@ const Swap: React.FC = () => {
   const [token1, setToken1] = useState<string | number | undefined>("")
   const [token0InitalImpact, setToken0InitialImpact] = useState<string | number | undefined>("1")
   const [token1InitialImpact, setToken1InitialImpact] = useState<string | number | undefined>("1")
-  const [token0Address, setToken0Address] = useState<string>(BUSD_ADDRESS)
-  const [token1Address, setToken1Address] = useState<string>(BUST_ADDRESS)
+  const [token0Address, setToken0Address] = useState<string>(ABI.BUSD.address)
+  const [token1Address, setToken1Address] = useState<string>(ABI.BUST.address)
   const [busdBalance, setBusdBalance] = useState<string>("0")
   const [bustBalance, setBustBalance] = useState<string>("0")
   const [swappingUI, setSwappingUI] = useState<boolean>(false)
   const [slippage, setSlippage] = useState<string>("0.5")
   const [deadLine, setDeadline] = useState<string>("5")
   const { getOtherTokenPrice, swap } = useSwap()
-  const { getBusdBalance, getBustBalance } = useGetUserBalance()
-  const { account } = useWeb3React()
+  const { account, library } = useWeb3React()
+  const {getBalance} = useGetBalance()
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
         if (account) {
-          const busd = await getBusdBalance(account)
-          const bust = await getBustBalance(account)
+          const busd = await getBalance(account, "BUSD", library)
+          const bust = await getBalance(account, "BUST", library)
           setBusdBalance(busd)
           setBustBalance(bust)
         }
@@ -47,11 +46,11 @@ const Swap: React.FC = () => {
       }
     }
 
-    if (account) {
+    if (account && library) {
       fetchBalance()
     }
     getOtherTokenInitialValue("BUSD")
-  }, [account])
+  }, [account, library])
 
   const handleSlippage = (value: string) => {
     setSlippage((prev): any => {
@@ -157,9 +156,10 @@ const Swap: React.FC = () => {
         token1,
         token0Address,
         token1Address,
-        token0Address == BUSD_ADDRESS ? "BUSD" : "BUST",
+        token0Address == ABI.BUSD.address ? "BUSD" : "BUST",
         slippage,
-        deadLine
+        deadLine,
+        library
       )
     }
   }

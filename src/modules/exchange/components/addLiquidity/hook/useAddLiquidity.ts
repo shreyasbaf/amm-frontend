@@ -1,19 +1,10 @@
 import BigNumber from "bignumber.js";
-import { usePrivateInstances } from "../../../../../blockchain/privateInstance/instances";
+import { useApprove } from "../../../../../blockchain/helperMethods/useApprove";
 import { PAIR_PUBLIC, ROUTER } from "../../../../../blockchain/publicInstance/instance";
-import { ROUTER_ADDRESS } from "../../../../../blockchain/publicInstance/router";
 
 
 export const useAddLiquidity = () => {
-    const { BUSD, BUST } = usePrivateInstances()
-
-    const checkAllowance = async (admin: string, swapType: string) => {
-        try {
-            return await (swapType == "BUSD" ? BUSD : BUST).methods.allowance(admin, ROUTER_ADDRESS).call()
-        } catch (err) {
-            console.error("error alowance", err);
-        }
-    }
+    const { approve } = useApprove()
     const getBUSTAmount = async (token0: string) => {
         try {
             if (Number(token0)) {
@@ -40,46 +31,11 @@ export const useAddLiquidity = () => {
         }
     }
 
-    const approve = async (account: string, tokenType: string) => {
+
+    const addLiquidity = async (account: string, token0: string | any, token1: string | any, token0Address: string, token1Address: string, deadLineValue: string, slippage: string, library: object) => {
         try {
-            const maxAllowance = new BigNumber(2).pow(256).minus(1);
-            await (tokenType == "BUSD" ? BUSD : BUST).methods.approve(ROUTER_ADDRESS, maxAllowance).send({
-                from: account
-            }).on("transactionHash", (hash: any) => {
-                alert(hash)
-            }).on("receipt", (receipt: any) => {
-                alert("approve token0 successfull")
-            }).on("error", (error: any, receipt: any) => {
-                alert("approve token0 failed")
-            })
-
-        } catch (err) {
-            console.error("approveToken0", err)
-        }
-    }
-
-    const addLiquidity = async (account: string, token0: string | any, token1: string | any, token0Address: string, token1Address: string, deadLineValue: string, slippage: string) => {
-        try {
-
-            let checkAllowance0: any = await checkAllowance(account, "BUSD")
-            checkAllowance0 = new BigNumber(checkAllowance0).dividedBy(10 ** 18).toFixed(0)
-            let checkAllowance1: any = await checkAllowance(account, "BUST")
-            checkAllowance1 = new BigNumber(checkAllowance1).dividedBy(10 ** 18).toFixed(0)
-            console.log({ checkAllowance0, checkAllowance1 });
-
-            if (Number(checkAllowance0) < Number(token0) && Number(checkAllowance1) < Number(token1)) {
-                console.log("KKKKKK");
-                await approve(account, "BUSD")
-                console.log("IIIIIIII");
-                await approve(account, "BUST")
-                console.log("JJJJJJJJJ");
-
-            } else if (Number(checkAllowance0) < Number(token0)) {
-                await approve(account, "BUSD")
-            } else if (Number(checkAllowance1) < Number(token1)) {
-                await approve(account, "BUST")
-            }
-
+            await approve(account, "BUSD", library)
+            await approve(account, "BUST", library)
             const deadLine = (Math.round(new Date().getTime() / 1000) + (Number(deadLineValue) ? Number(deadLineValue) * 60 : 5 * 60)).toString()
             const token0_wei = new BigNumber(token0).times(10 ** 18)
             const token1_wei = new BigNumber(token1).times(10 ** 18)

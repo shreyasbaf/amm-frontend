@@ -14,7 +14,19 @@ export enum AgentType {
 }
 
 export const isValid = (str: any) => {
-    return !/[~`!@#$%\^&*()+=\-\_\[\]\\';,/{}|\\":<>\A-Za-z\? ]/g.test(str);
+    return !/[~`!@#$%\^&*()+=\-\_\[\]\\';,/{}|\\":<>\A-Za-z\? ]/g.test(str)
+}
+
+export const validateAndTrim = (val: React.ChangeEvent<HTMLInputElement>) => {
+    let t = val.target.value
+    if (isValid(t)) {
+        val.target.value =
+            t.indexOf(".") >= 0
+                ? t.substring(0, t.indexOf(".")) + t.substring(t.indexOf("."), 19)
+                : t
+        return val.target.value
+    }
+    return 0
 }
 
 export function roundFloat(value: number | undefined): number {
@@ -120,8 +132,7 @@ export const currentStep = (steps: any, errors: any, meta?: any) => {
     return true
 }
 
-export const formatFieldPath = (formPath: string | undefined) => (fieldName: string): string =>
-    formPath ? `${formPath}.${fieldName}` : fieldName
+export const formatFieldPath = (formPath: string | undefined) => (fieldName: string): string => formPath ? `${formPath}.${fieldName}` : fieldName
 
 export function formatDate(date: any) {
     const d = new Date(date)
