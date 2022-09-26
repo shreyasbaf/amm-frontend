@@ -50,22 +50,6 @@
     "web3-react": "^5.0.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-runtime": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
-    "@babel/preset-react": "^7.16.0",
-    "@babel/preset-typescript": "^7.16.0",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^18.0.8",
-    "@types/react-datepicker": "^4.4.1",
-    "@types/react-dom": "^18.0.3",
-    "@types/react-table": "^7.7.10",
-    "@types/styled-components": "^5.1.17",
-    "babel-loader": "^8.2.3",
-    "html-webpack-plugin": "^5.5.0",
-    "webpack": "^5.64.4",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.4.0"
+    "@types/styled-components": "^5.1.17"
   }
 }
